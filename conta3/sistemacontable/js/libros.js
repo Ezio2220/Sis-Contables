@@ -1,5 +1,5 @@
 
-function agregar(){
+function agregarD(){
     var x = document.getElementById("cuenta").value;
     console.log(document.getElementById("cuenta"));
     console.log(x);
@@ -38,8 +38,56 @@ function agregar(){
 
     cont.innerHTML = resp;
 }
-function guardar(){
+function guardarD(){
     document.getElementById("contenido").innerHTML="";
     document.getElementById("debet").innerHTML = "$0.00";
     document.getElementById("habert").innerHTML = "$0.00";
+}
+
+function agregarM(){
+    var x = document.getElementById("cuenta").value;
+    var valor = document.getElementById("valor").value;
+    var partida = document.getElementById("partida").value;
+    var descripcion = document.getElementById("Descripcion").value;
+    var tipo;
+    if(document.getElementById("debe").checked){
+        tipo = document.getElementById("debe").value;
+    }else{
+        tipo = document.getElementById("haber").value;
+    }
+
+    var total;
+    var aux = document.getElementById("mayor").rows.length;
+    if(aux >1){
+        total = parseFloat(document.getElementById("mayor").rows[aux-1].cells[4].innerHTML);
+    }else{
+        total = 0;
+    }
+    if(document.getElementById("cuenta").options[0].text == x || document.getElementById("cuenta").options[2].text == x ){
+        if(tipo=="debe"){
+            total+=parseFloat(valor);
+        }else{
+            total -=parseFloat(valor);
+        }
+    }else{
+        if(tipo=="debe"){
+            total-=parseFloat(valor);
+        }else{
+            total += parseFloat(valor) ;
+        } 
+    }
+    var contenido = document.getElementById("contenido").innerHTML;
+    contenido += "<tr> <td>"+partida+"</td> <td>"+descripcion+"</td>";
+    if(tipo=="debe"){
+        contenido += "<td>"+valor+"</td><td></td><td>"+total+"</td>";
+    }else{
+        contenido += "<td></td><td>"+valor+"</td><td>"+total+"</td>";
+    }
+    document.getElementById("contenido").innerHTML=contenido;
+
+}
+
+function guardarM(){
+    document.getElementById("contenido").innerHTML=" ";
+
 }

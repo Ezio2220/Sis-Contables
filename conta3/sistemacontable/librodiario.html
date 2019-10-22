@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
 <head>
 	<meta charset="utf-8" />
 	<link rel="icon" type="image/png" href="assets/img/favicon.ico">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
 	<title>Sistemas Contables</title>
-
+    <script src="js/libros.js"></script>
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
 
@@ -134,9 +134,46 @@
                 <div class="row">
                     <div class="col-md-8">
                         <div class="card">
+                            <!-- -----------------------------CONTENIDO------------------------------------------------------------>
                             <div class="header">
-                                <h4 class="title">Datos</h4>
-                            </div>
+                            </div>  
+                                    <form style="padding: 20px" >
+                                            <center>
+                                            Cuenta: <select name="cuenta" id="cuenta">
+                                                        <option selected value="caja">caja</option>
+                                                        <option value="doc x pagar">doc x pagar</option>
+                                                        <option value="mercaderia">mercaderia</option>
+                                                    </select>    
+                                            debe:<input type="radio" value="debe" name="tipo" id="pos1">   
+                                            haber:<input type="radio" value="haber" name="tipo" id="pos2">     
+                                            <br>
+                                            valor: <input type="text" id= "valor">
+                                            Fecha: <input type="date" name="fecha" id="fecha"><br>
+                                            <input class="btn btn-primary" type="button" onclick="agregarD()" value="Agregar Cuenta">
+                                            <input class="btn btn-warning" type="button" onclick="guardarD()" value="Guardar Partida">
+                                            <table style="width: 100%"  border="1px">
+                                                <thead >
+                                                    <th style="width: 50%" >Detalle</th>
+                                                    <th style="width: 20%" >debe</th>
+                                                    <th style="width: 20%" >Haber</th>
+                                                </thead>
+                                                <tbody id="contenido" >
+                                                    
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <!-- se agrega id a las sumas del debe y del haber para poder tomar sus valores en js  -->
+                                                        <td>Totales:</td>
+                                                        <td id="debet">$0.00</td>
+                                                        <td id="habert" >$0.00</td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                            Descripcion: <input style="width: 75%" type="text" id="descripcion" >
+                                        </center>
+                                        </form>
+
+                            
                         </div>
                     </div>
                     
