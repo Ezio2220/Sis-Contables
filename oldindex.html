@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="diario.js"></script>
+    <title>libro diario</title>
+</head>
+<body>
+    <div style="width: 25%;display: inline-block" >
+        s
+    </div>
+    <div style="width: 50%;display: inline-block;border-radius: 20px;background-color: skyblue" >
+        <form>
+            <center>
+            Cuenta: <select name="cuenta" id="cuenta">
+                        <option selected value="caja">caja</option>
+                        <option value="doc x pagar">doc x pagar</option>
+                        <option value="mercaderia">mercaderia</option>
+                    </select>    
+            debe:<input type="radio" value="debe" name="tipo" id="pos1">   
+            haber:<input type="radio" value="haber" name="tipo" id="pos2">     
+            <br>
+            valor: <input type="text" id= "valor">
+            Fecha: <input type="date" name="fecha" id="fecha"><br>
+            <input type="button" onclick="agregar()" value="Agregar Cuenta">
+            <input type="button" onclick="guardar()" value="Guardar Partida">
+            <table style="width: 100%"  border="1px">
+                <thead >
+                    <th style="width: 50%" >Detalle</th>
+                    <th style="width: 20%" >debe</th>
+                    <th style="width: 20%" >Haber</th>
+                </thead>
+                <tbody id="contenido" >
+                    <tr style="height: 55px" >
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <!-- se agrega id a las sumas del debe y del haber para poder tomar sus valores en js  -->
+                        <td>Totales:</td>
+                        <td id="debet">$0.00</td>
+                        <td id="habert" >$0.00</td>
+                    </tr>
+                </tfoot>
+            </table>
+            Descripcion: <input style="width: 75%" type="text" id="descripcion" >
+        </center>
+        </form>
+    </div>
+    
+</body>
+</html>

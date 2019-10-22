@@ -1,57 +1,189 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="diario.js"></script>
-    <title>libro diario</title>
+	<meta charset="utf-8" />
+	<link rel="icon" type="image/png" href="conta3/sistemacontable/assets/img/favicon.ico">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+	<title>Sistemas Contables</title>
+
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+
+
+    <!-- Bootstrap core CSS     -->
+    <link href="conta3/sistemacontable/assets/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Animation library for notifications   -->
+    <link href="conta3/sistemacontable/assets/css/animate.min.css" rel="stylesheet"/>
+
+    <!--  Light Bootstrap Table core CSS    -->
+    <link href="conta3/sistemacontable/assets/css/light-bootstrap-dashboard.css?v=1.4.0" rel="stylesheet"/>
+
+
+    <!--  CSS for Demo Purpose, don't include it in your project     -->
+    <link href="conta3/sistemacontable/assets/css/demo.css" rel="stylesheet" />
+
+
+    <!--     Fonts and icons     -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
+    <link href="conta3/sistemacontable/assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
 </head>
 <body>
-    <div style="width: 25%;display: inline-block" >
-        s
+
+<div class="wrapper">
+    <div class="sidebar" data-color="blue" data-image="conta3/sistemacontable/assets/img/sidebar-5.jpg">
+
+    <!--   you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple" -->
+
+    <div class="sidebar-wrapper">
+            <div class="logo">
+               
+                    Menu de opciones
+                
+            </div>
+
+            <ul class="nav">
+                <li class="active">
+                    <a href="conta3/sistemacontable/index.html">
+                        <i class="pe-7s-home"></i>
+                        <p>INICIO</p>
+                    </a>
+                </li>
+                <li >
+                    <a href="conta3/sistemacontable/librodiario.html">
+                        <i class="pe-7s-news-paper"></i>
+                        <p>LIBRO DIARIO</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="conta3/sistemacontable/libromayor.html">
+                        <i class="pe-7s-notebook"></i>
+                        <p>LIBRO MAYOR</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="conta3/sistemacontable/bdcomprobacion.html">
+                        <i class="pe-7s-cash"></i>
+                        <p>BALANCE DE COMPROBAION</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="conta3/sistemacontable/eresultados.html">
+                        <i class="pe-7s-graph1"></i>
+                        <p>ESTADO DE RESULTADO</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="conta3/sistemacontable/bgeneral.html">
+                        <i class="pe-7s-global"></i>
+                        <p>BALANCE GENERAL</p>
+                    </a>
+                </li>
+                
+				
+            </ul>
+    	</div>
     </div>
-    <div style="width: 50%;display: inline-block;border-radius: 20px;background-color: skyblue" >
-        <form>
-            <center>
-            Cuenta: <select name="cuenta" id="cuenta">
-                        <option selected value="caja">caja</option>
-                        <option value="doc x pagar">doc x pagar</option>
-                        <option value="mercaderia">mercaderia</option>
-                    </select>    
-            debe:<input type="radio" value="debe" name="tipo" id="pos1">   
-            haber:<input type="radio" value="haber" name="tipo" id="pos2">     
-            <br>
-            valor: <input type="text" id= "valor">
-            Fecha: <input type="date" name="fecha" id="fecha"><br>
-            <input type="button" onclick="agregar()" value="Agregar Cuenta">
-            <input type="button" onclick="guardar()" value="Guardar Partida">
-            <table style="width: 100%"  border="1px">
-                <thead >
-                    <th style="width: 50%" >Detalle</th>
-                    <th style="width: 20%" >debe</th>
-                    <th style="width: 20%" >Haber</th>
-                </thead>
-                <tbody id="contenido" >
-                    <tr style="height: 55px" >
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <!-- se agrega id a las sumas del debe y del haber para poder tomar sus valores en js  -->
-                        <td>Totales:</td>
-                        <td id="debet">$0.00</td>
-                        <td id="habert" >$0.00</td>
-                    </tr>
-                </tfoot>
-            </table>
-            Descripcion: <input style="width: 75%" type="text" id="descripcion" >
-        </center>
-        </form>
+
+    <div class="main-panel">
+		<nav class="navbar navbar-default navbar-fixed">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Sistema de Contabilidad</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-left">
+                        
+                        <li>
+                           <a href="">
+                                <i class="fa fa-search"></i>
+								<p class="hidden-lg hidden-md">Buscador</p>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                           <a href="">
+                               <p>Cuenta</p>
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="#">
+                                <p>Cerrar sesion</p>
+                            </a>
+                        </li>
+						<li class="separator hidden-lg hidden-md"></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title">Datos</h4>
+                            </div>
+                        </div>
+                    </div>
+                    
+
+                </div>
+            </div>
+        </div>
+
+
+        <footer class="footer">
+            <div class="container-fluid">
+                <nav class="pull-left">
+                    <ul>
+                        <li>
+                            <a >
+                                ingenieria de sistemas informaticos
+                            </a>
+                        </li>
+                      
+                        
+                        <li>
+                            <a href="#">
+                               2019
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            
+            </div>
+        </footer>
+
     </div>
-    
+</div>
+
+
 </body>
+
+    <!--   Core JS Files   -->
+    <script src="conta3/sistemacontable/assets/js/jquery.3.2.1.min.js" type="text/javascript"></script>
+	
+
+	
+
+   
+
+  
+
+
+
 </html>
