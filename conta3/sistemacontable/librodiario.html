@@ -30,7 +30,7 @@
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
     <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
 </head>
-<body>
+<body onload="pre();">
 
 <div class="wrapper">
     <div class="sidebar" data-color="blue" data-image="assets/img/sidebar-5.jpg">
@@ -148,7 +148,9 @@
                                             haber:<input type="radio" value="haber" name="tipo" id="pos2">     
                                             <br>
                                             valor: <input type="text" id= "valor">
-                                            Fecha: <input type="date" name="fecha" id="fecha"><br>
+                                            Fecha: <input readonly type="date" name="fecha" id="fecha">
+                                             <label for="otro">¿es de otro dia?</label> <input onclick="cambio();" type="checkbox" name="otro" id="otro">
+                                            <br>
                                             <input class="btn btn-primary" type="button" onclick="agregarD()" value="Agregar Cuenta">
                                             <input class="btn btn-warning" type="button" onclick="guardarD()" value="Guardar Partida">
                                             <table style="width: 100%"  border="1px">

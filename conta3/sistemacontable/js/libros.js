@@ -1,4 +1,24 @@
 
+function obtenerval(id){
+    return document.getElementById(id).value;
+}
+function obtenerelm(id){
+    return document.getElementById(id);
+}
+function ponerval(id,val){
+    document.getElementById(id).value = val;
+    return console.log("agregado");
+}
+function pre(){
+    var f = new Date();
+    var fecha = obtenerelm("fecha");
+    ponerval("fecha",f.getFullYear() + "-" + (f.getMonth() +1) + "-" + f.getDate());
+    console.log("fecha leida");
+}
+function cambio(){
+    var fecha = obtenerelm("fecha");
+    return fecha.readOnly=!fecha.readOnly;
+}
 function agregarD(){
     var x = document.getElementById("cuenta").value;
     console.log(document.getElementById("cuenta"));
