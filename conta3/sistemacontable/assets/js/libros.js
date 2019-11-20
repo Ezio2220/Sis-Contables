@@ -73,7 +73,8 @@ function pre2(){
         var aux = snap.val();
         var comp= 1;
         for(var doc in aux){
-            if(comp!=doc.substring(0,7)){
+           // console.log(doc);
+            if(comp!=doc.substring(0,7) && doc!= "partidas"){
                 op=document.createElement("option");
                 op.text=doc.substring(0,7);
                 op.value =doc.substring(0,7);
@@ -113,11 +114,11 @@ function agregarD(){
     var nt2 = parseFloat(t2.substring(1));//y ademas se debe convertir lo que queda en un numero, por eso usamos parseFloat() para convertirlo en numero con decimales
     var resp  = cont.innerHTML ;
     if(tipo=="debe"){
-        resp+= "<tr> <td>"+ x + "</td>";
+        resp+= "<tr> <td>"+ x + ".<p style='color:white'>"+obtenerval("cuenta") +"</p></td>";
         resp+= "<td>$" + valor + " </td> <td></td> ";
         nt1 += parseFloat(valor);//cuando es el debe el que se agrego se suma al total numerico del debe
     }else{
-        resp += "<tr> <td style='text-align: center;' > "+ x + "</td>";
+        resp += "<tr> <td style='text-align: center;' > "+ x + ".<p style='color:white'>"+obtenerval("cuenta") +"</p></td>";
         resp+= "<td></td> <td>$" + valor + " </td> ";
         nt2+=parseFloat(valor);//si no es el debe entonces se suma en el total del haber
     }
@@ -233,5 +234,38 @@ function agregarM(){
 
 function guardarM(){
     document.getElementById("contenido").innerHTML=" ";
-
+}
+function filltabla(col,arreglo,id=0){
+    var tabla="";
+    tabla="<tr>";
+    for(var i=0;i<col;i++){
+        tabla+="<td>"+arreglo[i]+"</td>";
+    }
+    tabla+="</tr>";
+    return tabla;
+    
+}
+function cargar(){
+    var id = obtenerval("partida");
+    var bd = firebase.database().ref("LDiario");
+    var tbl="";
+    var ax;
+    var arr = new Array(4);
+    var detax;
+    //contenido
+    bd.once("value",function(snap){
+        var aux = snap.val();
+        var n = 1;
+        for(var data in aux){
+            ax=aux[data];
+            if(data.substring(0,7)==id){
+                arr.push(n);
+                arr.push(ax[0]);
+                detax = ax[1];
+                
+                tbl+= filltabla(4,)
+                n++
+            }
+        }
+    });
 }

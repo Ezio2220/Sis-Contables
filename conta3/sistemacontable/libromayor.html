@@ -30,7 +30,7 @@
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
     <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
 </head>
-<body>
+<body onload="pre2()">
 
 <div class="wrapper">
     <div class="sidebar" data-color="blue" data-image="assets/img/sidebar-5.jpg">
@@ -140,6 +140,11 @@
                             <center>
                             <form style="padding: 20px">
                                 <!-----------------------------------------------------CONTENIDO------------------------>
+                                <label for="partida">Seleccione el mes a operar: </label>
+                                <select name="partida" id="partida">
+
+                                </select>
+                                <input onclick="cargar()" type="button" value="CARGAR">
                                 Nombre de la Cuenta: <select style="width: 40%" name="cuenta" id="cuenta">
                                             <option selected value="caja">Efectivo y Equivalente</option>
                                             <option value="doc x pagar">doc x pagar</option>
@@ -217,11 +222,10 @@
 
     <!--   Core JS Files   -->
     <script src="assets/js/jquery.3.2.1.min.js" type="text/javascript"></script>
-	
+    <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase.js"></script>
+    <script src="assets/js/libros.js"></script>
 
 	
-
-   
 
   
 
