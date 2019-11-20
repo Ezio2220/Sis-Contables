@@ -114,11 +114,11 @@ function agregarD(){
     var nt2 = parseFloat(t2.substring(1));//y ademas se debe convertir lo que queda en un numero, por eso usamos parseFloat() para convertirlo en numero con decimales
     var resp  = cont.innerHTML ;
     if(tipo=="debe"){
-        resp+= "<tr> <td>"+ x + ".<p style='color:white'>"+obtenerval("cuenta") +"</p></td>";
+        resp+= "<tr> <td>"+obtenerval("cuenta") + " "+ x  +"</td>";
         resp+= "<td>$" + valor + " </td> <td></td> ";
         nt1 += parseFloat(valor);//cuando es el debe el que se agrego se suma al total numerico del debe
     }else{
-        resp += "<tr> <td style='text-align: center;' > "+ x + ".<p style='color:white'>"+obtenerval("cuenta") +"</p></td>";
+        resp += "<tr> <td style='text-align: center;' > "+obtenerval("cuenta") + " "+ x +"</td>";
         resp+= "<td></td> <td>$" + valor + " </td> ";
         nt2+=parseFloat(valor);//si no es el debe entonces se suma en el total del haber
     }
@@ -160,11 +160,14 @@ function guardarD(){
                 for(var i=1; i<tabla.rows.length-1;i++){
                    detalle+= tabla.rows[i].cells[0].innerHTML;
                     if(tabla.rows[i].cells[1].innerHTML.length>0){
-                        detalle+=" D:"+tabla.rows[i].cells[1].innerHTML;
+                        detalle+="-D:"+tabla.rows[i].cells[1].innerHTML.split(" ");
                     }else{
-                        detalle+=" H:"+tabla.rows[i].cells[2].innerHTML;
+                        detalle+="-H:"+tabla.rows[i].cells[2].innerHTML.split(" ");
                     }
-                    detalle+=";";
+                    if(i+1!=tabla.rows.length-1){
+                        detalle+=";";
+                    }
+                    
                 }
                 detalle+="|";
                 Obj["detalles"]=detalle;
@@ -235,19 +238,88 @@ function agregarM(){
 function guardarM(){
     document.getElementById("contenido").innerHTML=" ";
 }
-function filltabla(col,arreglo,id=0){
+function filltabla(col,arreglo,mayor=0){
     var tabla="";
+    var x;
     tabla="<tr>";
     for(var i=0;i<col;i++){
-        tabla+="<td>"+arreglo[i]+"</td>";
+        x= arreglo[i];
+        if(mayor && i==col-1){
+           x= "$"+arreglo[i];
+        }
+        tabla+="<td>"+x+"</td>";
+        
     }
     tabla+="</tr>";
     return tabla;
     
 }
+function cargarc(){
+    //lista.innerHTML= " ";
+    var id = obtenerval("partida");
+    var op;
+    var lista = obtenerelm("cuenta");
+    lista.innerHTML= " ";
+    var detax;
+    var sep = ";";
+    var comp = new Array();
+    var compax = true;
+    var bd = firebase.database().ref("LDiario");
+    bd.once("value",function(snap){
+        var aux = snap.val();
+        for(var doc in aux){
+            sep = ";";
+            var x = aux[doc];
+            if(doc.substring(0,7)==id){
+                console.log(x["descripcion"]);
+                detax=x["detalles"];
+                var indices = [];
+                for(var i = 0; i < detax.length; i++) {
+                    if (detax[i] === ";") indices.push(i);
+                }
+                var de = detax.substring(0,detax.search(";"));
+                console.log(de+" "+indices.length);
+                for(var j =0; j<=indices.length;j++){
+
+                    console.log(j+ " de "+indices.length);
+                    if(detax.indexOf(sep)==-1){
+                        console.log("fin");
+                        sep="|";
+                    }
+                    de = detax.substring(0,detax.indexOf(sep));
+                    console.log("la cuenta se llama "+ de.substring(de.indexOf(" "),de.search("-")));
+                    detax = detax.substring(detax.indexOf(sep)+1);
+
+                    op = document.createElement("option");
+                    op.text = de.substring(de.indexOf(" "),de.search("-"));
+                    op.value = de.substring(0,de.indexOf(" "));
+                    for(var k=0;k<comp.length;k++){
+                        console.log(k+" k de "+comp.length);
+                        if(comp[k]==de.substring(de.indexOf(" "),de.search("-"))){
+                            console.log("repetido");
+                            compax=false;
+                            k=comp.length;
+                        }
+                    }
+                    if(compax){
+                        lista.add(op);
+                        console.log("agrega");
+                        comp.push(de.substring(de.indexOf(" "),de.search("-")));
+                        
+                    }else{
+                        console.log("recuperado");
+                        compax=true;
+                    }
+                    
+                }     
+            }
+        }
+    });
+}
 function cargar(){
     var id = obtenerval("partida");
     var bd = firebase.database().ref("LDiario");
+    var cuenta = obtenerval("cuenta");
     var tbl="";
     var ax;
     var arr = new Array(4);
@@ -256,16 +328,77 @@ function cargar(){
     bd.once("value",function(snap){
         var aux = snap.val();
         var n = 1;
+        var sep = ";";
+        arr[4]=0;
         for(var data in aux){
             ax=aux[data];
+            
+            sep=";";
             if(data.substring(0,7)==id){
-                arr.push(n);
-                arr.push(ax[0]);
-                detax = ax[1];
-                
-                tbl+= filltabla(4,)
-                n++
+                console.log(ax);
+                detax = ax["detalles"];
+
+                var indices = [];
+                for(var i = 0; i < detax.length; i++) {
+                    if (detax[i] === ";") indices.push(i);
+                }
+                var de = detax.substring(0,detax.search(";"))
+               
+                for(var j =0; j<=indices.length;j++){
+                    console.log(de.substring(0,de.indexOf(" "))+" con "+cuenta);
+                    
+                    if(detax.indexOf(sep)==-1){
+                        console.log("fin");
+                        sep="|";
+                    }
+                    de = detax.substring(0,detax.indexOf(sep));
+                    if(de.substring(0,de.indexOf(" "))==cuenta){
+                    console.log(detax);
+                                     arr[0]=n;
+                                     arr[1]=ax["descripcion"];                    
+                    var type;
+                    console.log(de);
+                    if(de.substring(0,1)=="1"){
+                        type=1;
+                        console.log("es cuenta de activo");
+                    }else if(de.substring(0,1)=="2"){
+                        type=2;
+                        console.log("es cuenta de pasivo");
+                    }
+                    console.log("la cuenta se llama "+ de.substring(de.indexOf(" "),de.search("-")));
+                    var pos = de.substring(de.search("-")+1,de.search("-")+2);
+                    
+                    console.log(de.search(":")+1);
+                    var val = de.substring(de.search(":")+1,de.length);
+                    if(pos=="D"){
+                        console.log(pos+" esta en el debe");
+                        arr[2]=val;arr[3]="$0.00";
+                        if(type==1){
+                            arr[4]+= parseFloat(val.substring(1));
+                        }else{
+                            arr[4]-= parseFloat(val.substring(1));
+                        }
+
+                    }else{
+                        console.log(pos+" esta en el haber");
+                        arr[3]=val;arr[2]="$0.00";
+                        if(type==2){
+                            arr[4]+= parseFloat(val.substring(1));
+                        }else{
+                            arr[4]-= parseFloat(val.substring(1));
+                        }
+                    }
+                    console.log("la cantidad es "+val);
+                    tbl+= filltabla(5,arr,1);
+                    n++
+                    }
+                    console.log("final");
+                    detax = detax.substring(detax.indexOf(sep)+1);
+                    de = detax.substring(0,detax.indexOf(sep));
+                }                  
             }
         }
+        ponerdentro("contenido",tbl);
     });
 }
+

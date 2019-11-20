@@ -141,24 +141,14 @@
                             <form style="padding: 20px">
                                 <!-----------------------------------------------------CONTENIDO------------------------>
                                 <label for="partida">Seleccione el mes a operar: </label>
-                                <select name="partida" id="partida">
+                                <select onchange="cargarc()" name="partida" id="partida">
 
                                 </select>
-                                <input onclick="cargar()" type="button" value="CARGAR">
                                 Nombre de la Cuenta: <select style="width: 40%" name="cuenta" id="cuenta">
-                                            <option selected value="caja">Efectivo y Equivalente</option>
-                                            <option value="doc x pagar">doc x pagar</option>
-                                            <option value="mercaderia">mercaderia</option>
+
                                         </select>    
-                                <br>
-                                Descripcion: <input type="text" name="desc" id="Descripcion">
-                                Partida N°: <input type="number" name="partida" id="partida">
-                                <br>
-                                valor: <input type="text" name="valor" id="valor">
-                                debe:<input type="radio" value="debe" name="tipo" id="debe">   
-                                haber:<input type="radio" value="haber" name="tipo" id="haber">
-                                <br>
-                                <input onclick="agregarM()" class="btn btn-primary" type="button" value="Agregar">
+                               
+                                <input onclick="cargar()" class="btn btn-primary" type="button" value="Agregar">
                                 <br>
                                 <table style="width: 100%"  border="1px" id="mayor">
                                     <thead>
