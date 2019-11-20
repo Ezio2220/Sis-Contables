@@ -132,25 +132,39 @@
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-12">
                         <div class="card">
                             <!-- -----------------------------CONTENIDO------------------------------------------------------------>
                             <div class="header">
                             </div>  
-                                    <form style="padding: 20px" >
+                                    <form class="form-group" >
                                             <center>
-                                            Cuenta: <select name="cuenta" id="cuenta">
-                                                        <option selected value="caja">caja</option>
-                                                        <option value="doc x pagar">doc x pagar</option>
-                                                        <option value="mercaderia">mercaderia</option>
-                                                    </select>    
-                                            debe:<input type="radio" value="debe" name="tipo" id="pos1">   
-                                            haber:<input type="radio" value="haber" name="tipo" id="pos2">     
-                                            <br>
-                                            valor: <input type="text" id= "valor">
-                                            Fecha: <input readonly type="date" name="fecha" id="fecha">
-                                             <label for="otro">¿es de otro dia?</label> <input onclick="cambio();" type="checkbox" name="otro" id="otro">
-                                            <br>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        Cuenta: <select name="cuenta" id="cuenta">
+                                                            <option selected value="caja">Caja </option>
+                                                            <option value="doc x pagar">Doc x pagar </option>
+                                                            <option value="mercaderia">Mercaderia </option>
+                                                                </select> 
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        Debe: <input type="radio" value="debe" name="tipo" id="pos1">
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        Haber: <input type="radio" value="haber" name="tipo" id="pos2">
+                                                    </div>
+                                                </div>
+                                            <div class="row">
+                                                <div class="col-sm-5">
+                                                  Valor: <input  type="text" id= "valor">
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <input readonly type="date" name="fecha" id="fecha">
+                                                </div>
+                                                <div class="col-sm-3">
+                                                  <label for="otro">¿Es de otro dia?</label> <input class="form-check-input" onclick="cambio();" type="checkbox" name="otro" id="otro">
+                                                </div>
+                                              </div>
                                             <input class="btn btn-primary" type="button" onclick="agregarD()" value="Agregar Cuenta">
                                             <input class="btn btn-warning" type="button" onclick="guardarD()" value="Guardar Partida">
                                             <table style="width: 100%"  border="1px">
