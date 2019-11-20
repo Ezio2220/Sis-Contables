@@ -178,11 +178,20 @@
                             </div>
                         </div>                                                                                                
                                 </center>
-                                <br>                            
+                                <br>     
+                                
+                                <div class="row">
                                         <center>
-                                            <input class="btn btn-primary center" type="button" onclick="agregarD()" value="Agregar Cuenta">
-                                            <input class="btn btn-warning center" type="button" onclick="guardarD()" value="Guardar Partida">
-                                        </center>    
+                                            <div class="col-md-6" >
+                                                <input class="btn btn-primary btn-block" type="button" onclick="agregarD()" value="Agregar Cuenta">  
+                                            </div>
+                                            <div class="col-md-6">
+                                               <input class="btn btn-warning btn-block" type="button" onclick="guardarD()" value="Guardar Partida"> 
+                                            </div>
+                                            
+                                        </center> 
+                                </div>                       
+                                           
                                         <br>
                         
                                         <div class="card strpied-tabled-with-hover">
@@ -190,8 +199,8 @@
 
                                                 <thead >
                                                     <th style="width: 50%" >Detalle</th>
-                                                    <th style="width: 20%" >debe</th>
-                                                    <th style="width: 20%" >Haber</th>
+                                                    <th style="width: 25%" >debe</th>
+                                                    <th style="width: 25%" >Haber</th>
                                                 </thead>
                                                 <tbody id="contenido" >
                                                     
