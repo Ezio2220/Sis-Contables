@@ -6,7 +6,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
 	<title>Sistemas Contables</title>
-    <script src="js/libros.js"></script>
+    <script src="assets/js/libros.js"></script>
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
 
@@ -131,42 +131,63 @@
 
         <div class="content">
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
+                <div class="section">
                             <!-- -----------------------------CONTENIDO------------------------------------------------------------>
-                            <div class="header">
-                            </div>  
-                                    <form class="form-group" >
-                                            <center>
+                                    <form>
+<center>
                                                 <div class="row">
-                                                    <div class="col-sm-6">
-                                                        Cuenta: <select name="cuenta" id="cuenta">
-                                                            <option selected value="caja">Caja </option>
-                                                            <option value="doc x pagar">Doc x pagar </option>
-                                                            <option value="mercaderia">Mercaderia </option>
-                                                                </select> 
+                                                    <div class="col-md-5 pr-1">
+                                                        <div class="form-group">
+                                                            <label>Cuenta </label>
+                                                            <select class="form-control" name="cuenta" id="cuenta">
+                                                                <option selected value="caja">Caja </option>
+                                                                <option value="doc x pagar">Doc x pagar </option>
+                                                                <option value="mercaderia">Mercaderia </option>
+                                                            </select> 
+                                                        </div>         
+                                                    </div>    
+                                                    <div class="col-md-3 pr-1">
+                                                        <div class="form-group">
+                                                            <label class="center"> Debe </label><br>
+                                                            <input type="radio" value="debe" name="tipo" id="pos1">   
+                                                        </div>
                                                     </div>
-                                                    <div class="col-sm-3">
-                                                        Debe: <input type="radio" value="debe" name="tipo" id="pos1">
-                                                    </div>
-                                                    <div class="col-sm-3">
-                                                        Haber: <input type="radio" value="haber" name="tipo" id="pos2">
-                                                    </div>
+                                                    <div class="col-md-3 pr-1">
+                                                        <div class="form-group">
+                                                            <label class="center">Haber </label><br>
+                                                            <input type="radio" value="haber" name="tipo" id="pos2">              
+                                                            </div>
+                                                        </div>       
                                                 </div>
                                             <div class="row">
-                                                <div class="col-sm-5">
-                                                  Valor: <input  type="text" id= "valor">
+                                                <div class="col-md-5">
+                                                    <div class="form-group">
+                                                        <label>Valor</label>
+                                                        <input class="form-control" type="text" id= "valor">
+                                                    </div>
                                                 </div>
-                                                <div class="col-sm-4">
-                                                    <input readonly type="date" name="fecha" id="fecha">
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label>Fecha</label>
+                                                        <input readonly type="date" class="form-control" name="fecha" id="fecha">
+                                                    </div>  
                                                 </div>
-                                                <div class="col-sm-3">
-                                                  <label for="otro">¿Es de otro dia?</label> <input class="form-check-input" onclick="cambio();" type="checkbox" name="otro" id="otro">
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="otro">¿Es de otro dia?</label><br> 
+                                                        <input  onclick="cambio();" type="checkbox" name="otro" id="otro">
+                                                    </div>
                                                 </div>
-                                              </div>
-                                            <input class="btn btn-primary" type="button" onclick="agregarD()" value="Agregar Cuenta">
-                                            <input class="btn btn-warning" type="button" onclick="guardarD()" value="Guardar Partida">
+                                            </div>
+                </div>
+                </center>
+                <br>
+                                        <center>
+                                            <input class="btn btn-primary center" type="button" onclick="agregarD()" value="Agregar Cuenta">
+                                            <input class="btn btn-warning center" type="button" onclick="guardarD()" value="Guardar Partida">
+                                        </center>    
+                                        <br>
+                                        
                                             <table style="width: 100%"  border="1px">
                                                 <thead >
                                                     <th style="width: 50%" >Detalle</th>
@@ -186,13 +207,9 @@
                                                 </tfoot>
                                             </table>
                                             Descripcion: <input style="width: 75%" type="text" id="descripcion" >
-                                        </center>
+                                 
                                         </form>
 
-                            
-                        </div>
-                    </div>
-                    
 
                 </div>
             </div>
