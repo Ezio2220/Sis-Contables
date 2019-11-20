@@ -68,6 +68,10 @@ function pre(){
 function pre2(){
     var lista = obtenerelm("partida");
     var op;
+    var meses = new Array();
+    meses.push("Enero");meses.push("Febrero");meses.push("Marzo");meses.push("Abril");meses.push("Mayo");meses.push("Junio");
+    meses.push("Julio");meses.push("Agosto");meses.push("Septiembre");meses.push("Octubre");meses.push("Noviembre");meses.push("Diciembre");
+    
     var bd = firebase.database().ref("LDiario");
     bd.once("value",function(snap){
         var aux = snap.val();
@@ -76,7 +80,8 @@ function pre2(){
            // console.log(doc);
             if(comp!=doc.substring(0,7) && doc!= "partidas"){
                 op=document.createElement("option");
-                op.text=doc.substring(0,7);
+                console.log("esto es "+(parseInt(doc.substring(5,7))-1) );
+                op.text= meses[(parseInt(doc.substring(5,7))-1)] +" del "+ doc.substring(0,4);
                 op.value =doc.substring(0,7);
                 lista.add(op);
                 comp = doc.substring(0,7);
@@ -198,7 +203,7 @@ function guardarD(){
 
 }
 //#########################################################################################################################################
-function agregarM(){
+/*function agregarM(){
     var x = document.getElementById("cuenta").value;
     var valor = document.getElementById("valor").value;
     var partida = document.getElementById("partida").value;
@@ -239,22 +244,30 @@ function agregarM(){
     }
     document.getElementById("contenido").innerHTML=contenido;
 
-}
+}*/
 
 function guardarM(){
+    
+
+    
     document.getElementById("contenido").innerHTML=" ";
+
 }
+
 function filltabla(col,arreglo,mayor=0){
     var tabla="";
     var x;
+    
     tabla="<tr>";
+    if(mayor!=0 && mayor!=1){
+        tabla+="<td>T</td><td>"+mayor+"<td></td><td></td><td></td></tr><tr>";
+    }
     for(var i=0;i<col;i++){
         x= arreglo[i];
-        if(mayor && i==col-1){
+        if(mayor!=0 && i==col-1){
            x= "$"+arreglo[i];
         }
         tabla+="<td>"+x+"</td>";
-        
     }
     tabla+="</tr>";
     return tabla;
@@ -286,7 +299,6 @@ function cargarc(){
                 var de = detax.substring(0,detax.search(";"));
                 console.log(de+" "+indices.length);
                 for(var j =0; j<=indices.length;j++){
-
                     console.log(j+ " de "+indices.length);
                     if(detax.indexOf(sep)==-1){
                         console.log("fin");
@@ -295,7 +307,6 @@ function cargarc(){
                     de = detax.substring(0,detax.indexOf(sep));
                     console.log("la cuenta se llama "+ de.substring(de.indexOf(" "),de.search("-")));
                     detax = detax.substring(detax.indexOf(sep)+1);
-
                     op = document.createElement("option");
                     op.text = de.substring(de.indexOf(" "),de.search("-"));
                     op.value = de.substring(0,de.indexOf(" "));
@@ -311,12 +322,10 @@ function cargarc(){
                         lista.add(op);
                         console.log("agrega");
                         comp.push(de.substring(de.indexOf(" "),de.search("-")));
-                        
                     }else{
                         console.log("recuperado");
                         compax=true;
                     }
-                    
                 }     
             }
         }
@@ -326,86 +335,104 @@ function cargar(){
     var id = obtenerval("partida");
     var bd = firebase.database().ref("LDiario");
     var cuenta = obtenerval("cuenta");
+    var cax = document.getElementById("cuenta").options.selectedIndex;
+    var cx = document.getElementById("cuenta").options.item(cax).text;
     var tbl="";
     var ax;
     var arr = new Array(4);
     var detax;
+    var titlerep = true;
     //contenido
     bd.once("value",function(snap){
         var aux = snap.val();
-        var n = 1;
-        var sep = ";";
-        arr[4]=0;
-        for(var data in aux){
-            ax=aux[data];
-            
-            sep=";";
-            if(data.substring(0,7)==id){
-                console.log(ax);
-                detax = ax["detalles"];
-
-                var indices = [];
-                for(var i = 0; i < detax.length; i++) {
-                    if (detax[i] === ";") indices.push(i);
+      //  alert(obtenerelm("cuenta").length);
+        for(var re =0; re<obtenerelm("cuenta").length;re++){
+            tbl="";
+            titlerep = true;
+            cuenta = document.getElementById("cuenta").options.item(re).value;
+            cx = document.getElementById("cuenta").options.item(re).text;
+            console.log(cuenta +" -"+cx);
+            var n = 1;
+            var sep = ";";
+            arr[4]=0;
+            for(var data in aux){
+                ax=aux[data];
+                
+                sep=";";
+                if(data.substring(0,7)==id){
+                    console.log(ax);
+                    detax = ax["detalles"];
+    
+                    var indices = [];
+                    for(var i = 0; i < detax.length; i++) {
+                        if (detax[i] === ";") indices.push(i);
+                    }
+                    var de = detax.substring(0,detax.search(";"))
+                   
+                    for(var j =0; j<=indices.length;j++){
+                        console.log(de.substring(0,de.indexOf(" "))+" con "+cuenta);
+                        
+                        if(detax.indexOf(sep)==-1){
+                            console.log("fin");
+                            sep="|";
+                        }
+                        de = detax.substring(0,detax.indexOf(sep));
+                        if(de.substring(0,de.indexOf(" "))==cuenta){
+                        console.log(detax);
+                                         //arr[0]=n;
+                                         arr[0]=data.substring(data.indexOf("x")+1);
+                                         arr[1]=ax["descripcion"];                    
+                        var type;
+                        console.log(de);
+                        if(de.substring(0,1)=="1"){
+                            type=1;
+                            console.log("es cuenta de activo");
+                        }else if(de.substring(0,1)=="2"){
+                            type=2;
+                            console.log("es cuenta de pasivo");
+                        }
+                        console.log("la cuenta se llama "+ de.substring(de.indexOf(" "),de.search("-")));
+                        var pos = de.substring(de.search("-")+1,de.search("-")+2);
+                        
+                        console.log(de.search(":")+1);
+                        var val = de.substring(de.search(":")+1,de.length);
+                        if(pos=="D"){
+                            console.log(pos+" esta en el debe");
+                            arr[2]=val;arr[3]="$0.00";
+                            if(type==1){
+                                arr[4]+= parseFloat(val.substring(1));
+                            }else{
+                                arr[4]-= parseFloat(val.substring(1));
+                            }
+    
+                        }else{
+                            console.log(pos+" esta en el haber");
+                            arr[3]=val;arr[2]="$0.00";
+                            if(type==2){
+                                arr[4]+= parseFloat(val.substring(1));
+                            }else{
+                                arr[4]-= parseFloat(val.substring(1));
+                            }
+                        }
+                        console.log("la cantidad es "+val);
+                        if(titlerep){
+                            tbl+= filltabla(5,arr,cuenta+" "+cx);
+                            titlerep=false;
+                        }else{
+                            tbl+= filltabla(5,arr,1);
+                        }
+                        
+                        n++
+                        }
+                        console.log("final");
+                        detax = detax.substring(detax.indexOf(sep)+1);
+                        de = detax.substring(0,detax.indexOf(sep));
+                    }                  
                 }
-                var de = detax.substring(0,detax.search(";"))
-               
-                for(var j =0; j<=indices.length;j++){
-                    console.log(de.substring(0,de.indexOf(" "))+" con "+cuenta);
-                    
-                    if(detax.indexOf(sep)==-1){
-                        console.log("fin");
-                        sep="|";
-                    }
-                    de = detax.substring(0,detax.indexOf(sep));
-                    if(de.substring(0,de.indexOf(" "))==cuenta){
-                    console.log(detax);
-                                     //arr[0]=n;
-                                     arr[0]=data.substring(data.indexOf("x")+1);
-                                     arr[1]=ax["descripcion"];                    
-                    var type;
-                    console.log(de);
-                    if(de.substring(0,1)=="1"){
-                        type=1;
-                        console.log("es cuenta de activo");
-                    }else if(de.substring(0,1)=="2"){
-                        type=2;
-                        console.log("es cuenta de pasivo");
-                    }
-                    console.log("la cuenta se llama "+ de.substring(de.indexOf(" "),de.search("-")));
-                    var pos = de.substring(de.search("-")+1,de.search("-")+2);
-                    
-                    console.log(de.search(":")+1);
-                    var val = de.substring(de.search(":")+1,de.length);
-                    if(pos=="D"){
-                        console.log(pos+" esta en el debe");
-                        arr[2]=val;arr[3]="$0.00";
-                        if(type==1){
-                            arr[4]+= parseFloat(val.substring(1));
-                        }else{
-                            arr[4]-= parseFloat(val.substring(1));
-                        }
-
-                    }else{
-                        console.log(pos+" esta en el haber");
-                        arr[3]=val;arr[2]="$0.00";
-                        if(type==2){
-                            arr[4]+= parseFloat(val.substring(1));
-                        }else{
-                            arr[4]-= parseFloat(val.substring(1));
-                        }
-                    }
-                    console.log("la cantidad es "+val);
-                    tbl+= filltabla(5,arr,1);
-                    n++
-                    }
-                    console.log("final");
-                    detax = detax.substring(detax.indexOf(sep)+1);
-                    de = detax.substring(0,detax.indexOf(sep));
-                }                  
             }
+            ponerdentro("contenido", obtenerdentro("contenido")+tbl);
         }
-        ponerdentro("contenido",tbl);
+
     });
 }
 

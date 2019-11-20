@@ -30,7 +30,7 @@
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
     <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
 </head>
-<body onload="pre2()">
+<body onload="pre2();cargarc();">
 
 <div class="wrapper">
     <div class="sidebar" data-color="blue" data-image="assets/img/sidebar-5.jpg">
@@ -141,14 +141,15 @@
                             <form style="padding: 20px">
                                 <!-----------------------------------------------------CONTENIDO------------------------>
                                 <label for="partida">Seleccione el mes a operar: </label>
-                                <select onchange="cargarc()" name="partida" id="partida">
+                                <select onchange="ponerdentro('contenido','');cargar();" onclick="cargarc()" name="partida" id="partida">
 
                                 </select>
-                                Nombre de la Cuenta: <select style="width: 40%" name="cuenta" id="cuenta">
-
-                                        </select>    
-                               
-                                <input onclick="cargar()" class="btn btn-primary" type="button" value="Agregar">
+                                <div hidden > 
+                                    Nombre de la Cuenta: <select style="width: 40%" name="cuenta" id="cuenta">
+                                        </select>  
+                                    <input onclick="cargar()" class="btn btn-primary" type="button" value="Agregar">  
+                                </div>                              
+                                
                                 <br>
                                 <table style="width: 100%"  border="1px" id="mayor">
                                     <thead>
@@ -159,13 +160,7 @@
                                         <th style="width: 20%">Total</th>
                                     </thead>
                                     <tbody id = "contenido">
-                                        <tr>
-                                            <td>1</td>
-                                            <td>ejemplo</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                        </tr>
+                                        
                                     </tbody>
                                 </table>
                                 <br>
@@ -187,7 +182,7 @@
                 <nav class="pull-left">
                     <ul>
                         <li>
-                            <a >
+                            <a>
                                 ingenieria de sistemas informaticos
                             </a>
                         </li>
