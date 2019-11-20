@@ -45,7 +45,6 @@ function pre(){
     var op;
     bd.once("value",function(snap){
         var aux = snap.val();
-
         for(var doc in aux){
             console.log(doc);
             op = document.createElement("option");  
@@ -55,8 +54,7 @@ function pre(){
             op.style = "color:red; font-weight: bolder;";
             cuenta.add(op);
              x = aux[doc];
-            for(var data in x){
-                
+            for(var data in x){         
                 console.log(data);
                 op = document.createElement("option");    
                 op.disabled= false;            
@@ -65,9 +63,26 @@ function pre(){
                 cuenta.add(op);
             }
         }
+    });
+}
+function pre2(){
+    var lista = obtenerelm("partida");
+    var op;
+    var bd = firebase.database().ref("LDiario");
+    bd.once("value",function(snap){
+        var aux = snap.val();
+        var comp= 1;
+        for(var doc in aux){
+            if(comp!=doc.substring(0,7)){
+                op=document.createElement("option");
+                op.text=doc.substring(0,7);
+                op.value =doc.substring(0,7);
+                lista.add(op);
+                comp = doc.substring(0,7);
+            }
+        }
 
     });
-
 }
 function cambio(){
     var fecha = obtenerelm("fecha");
