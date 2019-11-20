@@ -146,7 +146,7 @@ function guardarD(){
                 for(var doc in aux){
                     console.log(doc.substring(0,10));
                     console.log("jaja "+obtenerval("fecha"));
-                    if(doc.substring(0,10)==obtenerval("fecha")){
+                    if(doc.substring(0,7)==obtenerval("fecha").substring(0,7)){
                        n++; 
                     }
                 }
@@ -158,11 +158,17 @@ function guardarD(){
                 var detalle="";
                 //console.log(tabla);
                 for(var i=1; i<tabla.rows.length-1;i++){
+                    if(tabla.rows[i].cells[0].innerHTML[0]==" "){
+                        tabla.rows[i].cells[0].innerHTML=tabla.rows[i].cells[0].innerHTML.substring(1);
+                    }
                    detalle+= tabla.rows[i].cells[0].innerHTML;
                     if(tabla.rows[i].cells[1].innerHTML.length>0){
-                        detalle+="-D:"+tabla.rows[i].cells[1].innerHTML.split(" ");
+                        detalle+="-D:"+tabla.rows[i].cells[1].innerHTML;
                     }else{
-                        detalle+="-H:"+tabla.rows[i].cells[2].innerHTML.split(" ");
+                        detalle+="-H:"+tabla.rows[i].cells[2].innerHTML;
+                    }
+                    if(detalle[detalle.length-1]==" "){
+                        detalle = detalle.substring(0,detalle.length-1);
                     }
                     if(i+1!=tabla.rows.length-1){
                         detalle+=";";
@@ -354,7 +360,8 @@ function cargar(){
                     de = detax.substring(0,detax.indexOf(sep));
                     if(de.substring(0,de.indexOf(" "))==cuenta){
                     console.log(detax);
-                                     arr[0]=n;
+                                     //arr[0]=n;
+                                     arr[0]=data.substring(data.indexOf("x")+1);
                                      arr[1]=ax["descripcion"];                    
                     var type;
                     console.log(de);
