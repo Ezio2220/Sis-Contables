@@ -247,10 +247,58 @@ function guardarD(){
 }*/
 
 function guardarM(){
-    
+    var id = obtenerval("partida");
+    var titulo;
+    var total ;
+    var tipo;
+    var ubicacion;
+    var totax ;
+   // var tipos = new Array();
+  //  tipos.push("nada");tipos.push("Activo");tipos.push("Pasivo");tipos.push("Capital");
+    var det="";
+    var titleax;
+    var Obj = new Object();
+    var tabla = obtenerelm("detalles");
+    for(var i=1; i<tabla.rows.length;i++){
 
-    
-    document.getElementById("contenido").innerHTML=" ";
+        if(tabla.rows[i].cells.length==1){
+            if(det.length>0){
+                det+=";";
+            }
+            titleax= tabla.rows[i].cells[0].innerHTML;
+            titulo = titleax.substring(titleax.indexOf(" ")+1);
+            totax = titleax.substring(0,titleax.indexOf(" "));
+            total = obtenerdentro(totax).substring(1);
+            tipo = parseInt(totax[0]);
+
+            if(tipo==1 || tipo== 5 || tipo== 6){
+                if(total[0]=="-"){
+                    ubicacion = "H";
+                    total= total.substring(1);
+                }else{
+                    ubicacion = "D";
+                }
+            }else{
+                if(total[0]=="-"){
+                    ubicacion = "D";
+                    total= total.substring(1);
+                }else{
+                    ubicacion = "H";
+                }
+            }
+            det+=titulo+"-"+tipo+":"+ubicacion+"$"+total;
+        }
+        if(i+1==tabla.rows.length){
+            det+="|";
+        }
+    }
+    Obj["detalles"]=det;
+    console.log(det);
+    var db = firebase.database().ref("LMayor/"+id);
+    db.set(Obj);
+    alert("Libro mayor guardado!");
+    location.reload();
+   // document.getElementById("contenido").innerHTML=" ";
 
 }
 
@@ -260,7 +308,7 @@ function filltabla(col,arreglo,mayor=0){
     
     tabla="<tr>";
     if(mayor!=0 && mayor!=1){
-        tabla+="<td>T</td><td>"+mayor+"<td></td><td></td><td></td></tr><tr>";
+        tabla+="<td style='font-weight:bolder;' class='text-center' colspan='"+col+"'>"+mayor+"</td></tr><tr>";
     }
     for(var i=0;i<col;i++){
         x= arreglo[i];
@@ -342,6 +390,8 @@ function cargar(){
     var arr = new Array(4);
     var detax;
     var titlerep = true;
+    var totD=0;
+    var totH=0;
     //contenido
     bd.once("value",function(snap){
         var aux = snap.val();
@@ -357,7 +407,6 @@ function cargar(){
             arr[4]=0;
             for(var data in aux){
                 ax=aux[data];
-                
                 sep=";";
                 if(data.substring(0,7)==id){
                     console.log(ax);
@@ -399,10 +448,13 @@ function cargar(){
                         if(pos=="D"){
                             console.log(pos+" esta en el debe");
                             arr[2]=val;arr[3]="$0.00";
+                            console.log(totD);
                             if(type==1){
                                 arr[4]+= parseFloat(val.substring(1));
+                                totD+= parseFloat(val.substring(1));
                             }else{
                                 arr[4]-= parseFloat(val.substring(1));
+                                totD+= parseFloat(val.substring(1));
                             }
     
                         }else{
@@ -410,8 +462,10 @@ function cargar(){
                             arr[3]=val;arr[2]="$0.00";
                             if(type==2){
                                 arr[4]+= parseFloat(val.substring(1));
+                                totH+= parseFloat(val.substring(1));
                             }else{
                                 arr[4]-= parseFloat(val.substring(1));
+                                totH+= parseFloat(val.substring(1));
                             }
                         }
                         console.log("la cantidad es "+val);
@@ -421,7 +475,6 @@ function cargar(){
                         }else{
                             tbl+= filltabla(5,arr,1);
                         }
-                        
                         n++
                         }
                         console.log("final");
@@ -430,9 +483,15 @@ function cargar(){
                     }                  
                 }
             }
+            tbl+="<tr> <td style='font-weight:bolder;' class='text-center' colspan='3' >TOTAL:</td><td id='"+cuenta+"' style='font-weight:bolder;' class='text-center' colspan='2'>$"+arr[4]+"</td></tr>"
             ponerdentro("contenido", obtenerdentro("contenido")+tbl);
         }
-
+        parseFloat(totD)<0?totD*=-1:'';
+        parseFloat(totH)<0?totH*=-1:'';
+        tbl="<tr> <td style='font-weight:bolder;' class='text-center' colspan='2' >TOTALES:</td>"+
+        "<td id='totD' style='font-weight:bolder;' class='text-center'>$"+totD+"</td>"+
+        "<td id='totH' style='font-weight:bolder;' class='text-center'>$"+totH+"</td><td></td></tr>"
+        ponerdentro("contenido", obtenerdentro("contenido")+tbl);
     });
 }
 
