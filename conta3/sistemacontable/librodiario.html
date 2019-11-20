@@ -131,58 +131,55 @@
 
         <div class="content">
             <div class="container-fluid">
+            <center>
                 <div class="section">
                             <!-- -----------------------------CONTENIDO------------------------------------------------------------>
-                                    <form>
-<center>
-                                                <div class="row">
+                    <form>
+                        <div class="row">                                                      
+                            <div class="col-md-5 pr-1">
+                                <div class="form-group">
+                                    <label>Cuenta </label>
+                                    <select class="form-control" name="cuenta" id="cuenta">
 
-                                                       
-                                                        <div class="col-md-5 pr-1">
-                                                            <div class="form-group">
-                                                                <label>Cuenta </label>
-                                                                <select class="form-control" name="cuenta" id="cuenta">
-
-                                                                </select> 
-                                                            </div>         
-                                                        </div>    
-                                                        <div class="col-md-3 pr-1">
-                                                            <div class="form-group">
-                                                                <label class="center"> Debe </label><br>
-                                                                <input type="radio" value="debe" name="tipo" id="pos1">   
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-3 pr-1">
-                                                            <div class="form-group">
-                                                                <label class="center">Haber </label><br>
-                                                                <input type="radio" value="haber" name="tipo" id="pos2">              
-                                                            </div>
-                                                        </div>       
-                                                </div>
-                                            <div class="row">
-                                                <div class="col-md-5">
-                                                    <div class="form-group">
-                                                        <label>Valor</label>
-                                                        <input class="form-control" type="text" id= "valor">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <div class="form-group">
-                                                        <label>Fecha</label>
-                                                        <input readonly type="date" class="form-control" name="fecha" id="fecha">
-                                                    </div>  
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <div class="form-group">
-                                                        <label for="otro">¿Es de otro dia?</label><br> 
-                                                        <input  onclick="cambio();" type="checkbox" name="otro" id="otro">
-                                                    </div>
-                                                </div>
-
-                                            </div>
+                                    </select> 
+                                </div>         
+                            </div>    
+                            <div class="col-md-3 pr-1">
+                                <div class="form-group">
+                                    <label class="center"> Debe </label><br>
+                                    <input type="radio" value="debe" name="tipo" id="pos1">   
+                                </div>
+                            </div>
+                            <div class="col-md-3 pr-1">
+                                <div class="form-group">
+                                    <label class="center">Haber </label><br>
+                                    <input type="radio" value="haber" name="tipo" id="pos2">              
+                                </div>
+                            </div>       
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label>Valor</label>
+                                    <input class="form-control" type="text" id= "valor">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Fecha</label>
+                                    <input readonly type="date" class="form-control" name="fecha" id="fecha">
+                                </div>  
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="otro">¿Es de otro dia?</label><br> 
+                                    <input  onclick="cambio();" type="checkbox" name="otro" id="otro">
+                                </div>
+                            </div>
+                        </div>                                                                                                
                 </div>
                 </center>
-                <br>
+                <br>                            
                                         <center>
                                             <input class="btn btn-primary center" type="button" onclick="agregarD()" value="Agregar Cuenta">
                                             <input class="btn btn-warning center" type="button" onclick="guardarD()" value="Guardar Partida">
@@ -208,6 +205,7 @@
                                                     </tr>
                                                 </tfoot>
                                             </table>
+                                            <div class="row"></div>
                                             Descripcion: <input style="width: 75%" type="text" id="descripcion" >
                                  
                                         </form>
