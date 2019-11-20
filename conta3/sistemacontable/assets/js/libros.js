@@ -31,6 +31,10 @@ function ponerdentro(id,val){
     document.getElementById(id).innerHTML = val;
     return console.log("agregado");
 }
+function listatexto(id){
+    var ax = document.getElementById(id).options.selectedIndex;
+    return document.getElementById(id).options.item(ax).text;
+}
 //######################################################################################################
 
 function pre(){
@@ -203,73 +207,144 @@ function guardarD(){
 
 }
 //#########################################################################################################################################
-/*function agregarM(){
-    var x = document.getElementById("cuenta").value;
-    var valor = document.getElementById("valor").value;
-    var partida = document.getElementById("partida").value;
-    var descripcion = document.getElementById("Descripcion").value;
-    var tipo;
-    if(document.getElementById("debe").checked){
-        tipo = document.getElementById("debe").value;
-    }else{
-        tipo = document.getElementById("haber").value;
-    }
 
-    var total;
-    var aux = document.getElementById("mayor").rows.length;
-    if(aux >1){
-        total = parseFloat(document.getElementById("mayor").rows[aux-1].cells[4].innerHTML);
-    }else{
-        total = 0;
-    }
-    if(document.getElementById("cuenta").options[0].text == x || document.getElementById("cuenta").options[2].text == x ){
-        if(tipo=="debe"){
-            total+=parseFloat(valor);
-        }else{
-            total -=parseFloat(valor);
-        }
-    }else{
-        if(tipo=="debe"){
-            total-=parseFloat(valor);
-        }else{
-            total += parseFloat(valor) ;
-        } 
-    }
-    var contenido = document.getElementById("contenido").innerHTML;
-    contenido += "<tr> <td>"+partida+"</td> <td>"+descripcion+"</td>";
-    if(tipo=="debe"){
-        contenido += "<td>"+valor+"</td><td></td><td>"+total+"</td>";
-    }else{
-        contenido += "<td></td><td>"+valor+"</td><td>"+total+"</td>";
-    }
-    document.getElementById("contenido").innerHTML=contenido;
-
-}*/
-function imprimir(id="detalles",mes){
+function imprimir(id="detalles",mes,contenido="M"){
     var titulo;
     var sub;
+    if(contenido=="M"){
+        titulo = "<h1> EMPRESA X LIBRO MAYOR  </h1> <br>";
+    }else if(contenido=="D"){
+        titulo = "<h1> EMPRESA X LIBRO DIARIO  </h1> <br>";
+    }
     
-
-    titulo = "<h1> EMPRESA X LIBRO MAYOR  </h1> <br>";
     sub = "<h2>"+mes+"</h2>";
     var ventana = window.open('','PRINT', 'height=400,width=600');
     ventana.document.write('<html><head>');
     ventana.document.write( "<link href='assets/css/bootstrap.min.css' rel='stylesheet'/>");
     ventana.document.write("</head><body onload='window.print();window.close();'> <div style='width: 100%' ><center>");
     ventana.document.write(titulo+sub+"<br><br>");
-    ventana.document.write("<table style='width:80%;'  border='1px'>"+obtenerdentro("detalles")+"</table>");
-
+    if(contenido=="M" || contenido=="D"){
+        ventana.document.write("<table style='width:80%;'  border='1px'>"+obtenerdentro("detalles")+"</table>");
+    }
     ventana.document.write('</center></div></body></html>');
     ventana.document.close(); // necesario para IE >= 10
     ventana.focus(); // necesario para IE >= 10
-      
 }
-function axprint(ll){
-    ll.print();
-    ll.close();
-    console.log("lol");
+function axdiario(){
+    var id = obtenerval("partida");
+    var bd = firebase.database().ref("LDiario");
+    var cuenta = obtenerval("cuenta");
+    var cax = document.getElementById("cuenta").options.selectedIndex;
+    var cx = document.getElementById("cuenta").options.item(cax).text;
+    var tbl="";
+    var ax;
+    var arr = new Array(4);
+    var detax;
+    var titlerep = true;
+    var totD=0;
+    var totH=0;
+    var dax=0;
+    var hax=0;
+    //contenido
+    bd.once("value",function(snap){
+        var aux = snap.val();
+            tbl="";
+            titlerep = true;
+            console.log(cuenta +" -"+cx);
+            var n = 1;
+            var sep = ";";
+            arr[3]=0;
+            arr[2]=0;
+            for(var data in aux){
+                ax=aux[data];
+                sep=";";
+                if(data.substring(0,7)==id){
+                    dax=0;
+                    hax=0;
+                    console.log(ax);
+                    detax = ax["detalles"];
+                    tbl+="<tr> <td>"+ax["fecha"]+"</td><td style='font-weight:bolder;' class='text-center'>"+data.substring(11)+"</td> <td></td><td></td> </tr>";
+                    var indices = [];
+                    for(var i = 0; i < detax.length; i++) {
+                        if (detax[i] === ";") indices.push(i);
+                    }
+                    var de = detax.substring(0,detax.search(";"))
+                    console.log("SONSON: "+indices.length);
+                    for(var j =0; j<=indices.length;j++){
+                        //console.log(de.substring(0,de.indexOf(" "))+" con "+cuenta);
+                        if(detax.indexOf(sep)==-1){
+                            console.log("fin");
+                            sep="|";
+                        }
+                        de = detax.substring(0,detax.indexOf(sep));
+                        console.log(detax);
+                                         arr[0]=" ";
+                                         arr[1]=de.substring(de.indexOf(" "),de.search("-"));                    
+                        var type;
+                        console.log(de);
+                        if(de.substring(0,1)=="1"){
+                            type=1;
+                            console.log("es cuenta de activo");
+                        }else if(de.substring(0,1)=="2"){
+                            type=2;
+                            console.log("es cuenta de pasivo");
+                        }
+                        console.log("la cuenta se llama "+ de.substring(de.indexOf(" "),de.search("-")));
+                        var pos = de.substring(de.search("-")+1,de.search("-")+2);
+                        
+                        console.log(de.search(":")+1);
+                        var val = de.substring(de.search(":")+1,de.length);
+                        if(pos=="D"){
+                            console.log(pos+" esta en el debe");
+                            arr[2]=val;arr[3]="0.00";
+                            tbl+= "<tr><td> "+arr[0]+" </td><td> "+arr[1]+" </td> <td>"+arr[2]+"</td> <td>$"+arr[3]+"</td> </tr>";
+                            console.log(arr[1]);
+                            if(type==1){
+                              //  arr[4]+= parseFloat(val.substring(1));
+                                totD+= parseFloat(val.substring(1));
+                                dax+= parseFloat(val.substring(1));
+                            }else{
+                              //  arr[4]-= parseFloat(val.substring(1));
+                                totD+= parseFloat(val.substring(1));
+                                dax+= parseFloat(val.substring(1));
+                            }
+    
+                        }else{
+                            console.log(pos+" esta en el haber");
+                            arr[3]=val;arr[2]="0.00";
+                            tbl+= "<tr><td> "+arr[0]+" </td><td style='text-align: center;' > "+arr[1]+" </td> <td>$"+arr[2]+"</td> <td>"+arr[3]+"</td> </tr>";
+                            console.log(arr[1]);
+                            if(type==2){
+                                //arr[4]+= parseFloat(val.substring(1));
+                                totH+= parseFloat(val.substring(1));
+                                hax+= parseFloat(val.substring(1));
+                            }else{
+                              //  arr[4]-= parseFloat(val.substring(1));
+                                totH+= parseFloat(val.substring(1));
+                                hax+= parseFloat(val.substring(1));
+                            }
+                        }
+                       // alert(tbl);
+                        console.log("la cantidad es "+val);
+                        n++
+                        console.log("final");
+                        detax = detax.substring(detax.indexOf(sep)+1);
+                        de = detax.substring(0,detax.indexOf(sep));
+                    }
+                        tbl+="<tr> <td style='font-weight:bolder;' class='text-center' colspan='2' >"+ax["descripcion"]+"</td><td style='font-weight:bolder;' class='text-center'>$"+dax+"</td><td style='font-weight:bolder;' class='text-center'>$"+hax+"</td></tr>";
+                      //  ponerdentro("contenido", obtenerdentro("contenido")+tbl);                 
+                }
+            }
 
+        parseFloat(totD)<0?totD*=-1:'';
+        parseFloat(totH)<0?totH*=-1:'';
+        tbl+="<tr> <td style='font-weight:bolder;' class='text-center' colspan='2' >TOTALES:</td>"+
+        "<td id='totD' style='font-weight:bolder;' class='text-center'>$"+totD+"</td>"+
+        "<td id='totH' style='font-weight:bolder;' class='text-center'>$"+totH+"</td></tr>"
+        ponerdentro("contenido", obtenerdentro("contenido")+tbl);
+    });
 }
+
 function guardarM(){
     var id = obtenerval("partida");
     var titulo;
