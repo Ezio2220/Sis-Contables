@@ -245,7 +245,31 @@ function guardarD(){
     document.getElementById("contenido").innerHTML=contenido;
 
 }*/
+function imprimir(id="detalles",mes){
+    var titulo;
+    var sub;
+    
 
+    titulo = "<h1> EMPRESA X LIBRO MAYOR  </h1> <br>";
+    sub = "<h2>"+mes+"</h2>";
+    var ventana = window.open('','PRINT', 'height=400,width=600');
+    ventana.document.write('<html><head>');
+    ventana.document.write( "<link href='assets/css/bootstrap.min.css' rel='stylesheet'/>");
+    ventana.document.write("</head><body onload='window.print();window.close();'> <div style='width: 100%' ><center>");
+    ventana.document.write(titulo+sub+"<br><br>");
+    ventana.document.write("<table style='width:80%;'  border='1px'>"+obtenerdentro("detalles")+"</table>");
+
+    ventana.document.write('</center></div></body></html>');
+    ventana.document.close(); // necesario para IE >= 10
+    ventana.focus(); // necesario para IE >= 10
+      
+}
+function axprint(ll){
+    ll.print();
+    ll.close();
+    console.log("lol");
+
+}
 function guardarM(){
     var id = obtenerval("partida");
     var titulo;
@@ -296,8 +320,12 @@ function guardarM(){
     console.log(det);
     var db = firebase.database().ref("LMayor/"+id);
     db.set(Obj);
+    
     alert("Libro mayor guardado!");
-    location.reload();
+    var idax = obtenerelm("partida").options.selectedIndex;
+    var idx = document.getElementById("partida").options.item(idax).text;
+    imprimir("detalles",idx);
+    setTimeout(location.reload(),1000);
    // document.getElementById("contenido").innerHTML=" ";
 
 }
@@ -377,6 +405,7 @@ function cargarc(){
                 }     
             }
         }
+        
     });
 }
 function cargar(){
