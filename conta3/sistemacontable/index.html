@@ -30,7 +30,7 @@
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
     <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
 </head>
-<body>
+<body onload="pre2();cargarc();">
 
 <div class="wrapper">
     <div class="sidebar" data-color="blue" data-image="assets/img/sidebar-5.jpg">
@@ -135,8 +135,34 @@
                     <div class="col-md-8">
                         <div class="card">
                             <div class="header">
-                                <h4 class="title">Datos</h4>
+                                <h4 class="title">Consultar Libro diario</h4>
                             </div>
+                            <form action="">
+                                <label for="partida">Seleccione el mes a Consultar: </label>
+                                <select onchange="ponerdentro('contenido','');axdiario();" onclick="cargarc()" name="partida" id="partida">
+
+                                </select>
+                                <div hidden > 
+                                    Nombre de la Cuenta: <select style="width: 40%" name="cuenta" id="cuenta">
+                                        </select>  
+                                    <input onclick="axdiario();" class="btn btn-primary" type="button" value="Agregar">  
+                                </div>                              
+                                
+                                <br>
+                                <table id="detalles" style="width: 100%"  border="1px" >
+                                    <thead>
+                                        <th style="width: 15%">Fecha</th>
+                                        <th style="width: 45%">Descripcion</th>
+                                        <th style="width: 20%">Debe</th>
+                                        <th style="width: 20%">Haber</th>
+                                    </thead>
+                                    <tbody id = "contenido">
+                                        
+                                    </tbody>
+                                </table>
+                                <br>
+                                <input class="btn btn-primary" onclick="imprimir('detalles',listatexto('partida'),'D');" type="button" value="Imprimir Libro Diario">
+                            </form>
                         </div>
                     </div>
                     
@@ -176,7 +202,8 @@
 
     <!--   Core JS Files   -->
     <script src="assets/js/jquery.3.2.1.min.js" type="text/javascript"></script>
-	
+    <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase.js"></script>
+    <script src="assets/js/libros.js"></script>
 
 	
 

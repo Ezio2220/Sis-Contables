@@ -10,16 +10,12 @@
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
 
-
     <!-- Bootstrap core CSS     -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
-
     <!-- Animation library for notifications   -->
     <link href="assets/css/animate.min.css" rel="stylesheet"/>
-
     <!--  Light Bootstrap Table core CSS    -->
     <link href="assets/css/light-bootstrap-dashboard.css?v=1.4.0" rel="stylesheet"/>
-
 
     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link href="assets/css/demo.css" rel="stylesheet" />
@@ -30,7 +26,7 @@
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
     <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
 </head>
-<body>
+<body onload="pre2();cargarc();">
 
 <div class="wrapper">
     <div class="sidebar" data-color="blue" data-image="assets/img/sidebar-5.jpg">
@@ -140,41 +136,31 @@
                             <center>
                             <form style="padding: 20px">
                                 <!-----------------------------------------------------CONTENIDO------------------------>
-                                Nombre de la Cuenta: <select style="width: 40%" name="cuenta" id="cuenta">
-                                            <option selected value="caja">Efectivo y Equivalente</option>
-                                            <option value="doc x pagar">doc x pagar</option>
-                                            <option value="mercaderia">mercaderia</option>
-                                        </select>    
+                                <label for="partida">Seleccione el mes a operar: </label>
+                                <select onchange="ponerdentro('contenido','');cargar();" onclick="cargarc()" name="partida" id="partida">
+
+                                </select>
+                                <div hidden > 
+                                    Nombre de la Cuenta: <select style="width: 40%" name="cuenta" id="cuenta">
+                                        </select>  
+                                    <input onclick="cargar()" class="btn btn-primary" type="button" value="Agregar">  
+                                </div>                              
+                                
                                 <br>
-                                Descripcion: <input type="text" name="desc" id="Descripcion">
-                                Partida N°: <input type="number" name="partida" id="partida">
-                                <br>
-                                valor: <input type="text" name="valor" id="valor">
-                                debe:<input type="radio" value="debe" name="tipo" id="debe">   
-                                haber:<input type="radio" value="haber" name="tipo" id="haber">
-                                <br>
-                                <input onclick="agregarM()" class="btn btn-primary" type="button" value="Agregar">
-                                <br>
-                                <table style="width: 100%"  border="1px" id="mayor">
+                                <table id="detalles" style="width: 100%"  border="1px" >
                                     <thead>
-                                        <th style="width: 10%">N°</th>
+                                        <th style="width: 10%">Partida N°</th>
                                         <th style="width: 30%">Descripcion</th>
                                         <th style="width: 20%">Debe</th>
                                         <th style="width: 20%">Haber</th>
                                         <th style="width: 20%">Total</th>
                                     </thead>
                                     <tbody id = "contenido">
-                                        <tr>
-                                            <td>1</td>
-                                            <td>ejemplo</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                        </tr>
+                                        
                                     </tbody>
                                 </table>
                                 <br>
-                                <input class="btn btn-primary" onclick="guardarM()" type="button" value="Guardar Cuenta">
+                                <input class="btn btn-primary" onclick="guardarM()" type="button" value="Guardar Libro Mayor">
                             </form>
                             </center>
 
@@ -192,7 +178,7 @@
                 <nav class="pull-left">
                     <ul>
                         <li>
-                            <a >
+                            <a>
                                 ingenieria de sistemas informaticos
                             </a>
                         </li>
@@ -217,11 +203,10 @@
 
     <!--   Core JS Files   -->
     <script src="assets/js/jquery.3.2.1.min.js" type="text/javascript"></script>
-	
+    <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase.js"></script>
+    <script src="assets/js/libros.js"></script>
 
 	
-
-   
 
   
 
