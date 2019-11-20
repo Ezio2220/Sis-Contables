@@ -111,6 +111,7 @@ function agregarD(){
     document.getElementById("habert").innerHTML = "$"+ nt2;
     cont.innerHTML = resp;
     }else{
+      //  showNotification('top','center',"debe agregar el valor que se esta cargando/abonando");
         alert("debe agregar el valor que se esta cargando/abonando");
     }
     
