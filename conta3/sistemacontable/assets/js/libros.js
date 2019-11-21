@@ -599,6 +599,18 @@ function cargar(){
 }
 
 function comprobacion(){
+    var detalles = obtenerval("cons");
+    var indices = [];
+    var sep=";";
+    var totD=0;
+    var totH=0;
+    for(var i = 0; i < detalles.length; i++) {
+        if (detalles[i] === ";") indices.push(i);
+    }
+    for(var i in indices){
+        sep=";";
+    }
+
 
 }
 function cargarM(id="cons"){
@@ -614,7 +626,8 @@ function cargarM(id="cons"){
             if(data!="partidas"){
                 op = document.createElement("option");
                 op.text= meses[(parseInt(data.substring(5))-1)] +" del "+ data.substring(0,4);
-                op.value= data;
+                op.value = aux[data].detalles;
+               // op.value= data;
                 lista.add(op);
             }
 
