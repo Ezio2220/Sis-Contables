@@ -598,7 +598,7 @@ function cargar(){
     });
 }
 
-function comprobacion(){
+function comprobacion(bc="comprobacion"){
     var detalles = obtenerval("cons");
     var indices = [];
     var sep=";";
@@ -609,67 +609,151 @@ function comprobacion(){
     var cantidad;
     var ubicacion;
     var de ;
-    var contenidos = new Array(6);
+    var contenidos = new Array(6);//A,P,C,I,Costos,G
     var axtodo;
-    for(var i in contenidos){
+    for(var i=0;i<6;i++){
         contenidos[i]="";
     }
-    var totales = new Array(6);
-    for(var i in totales){
+    var totales = new Array(6);//TA,Tp,Tc,Ti,TC,TG
+    for(var i=0;i<6;i++){
         totales[i]=0;
     }
     for(var i = 0; i < detalles.length; i++) {
         if (detalles[i] === ";") indices.push(i);
     }
 
-    for(var i in indices){
-
+    for(var i=0;i<=indices.length;i++){
+        console.log(detalles);
         if(detalles.indexOf(sep)==-1){
             console.log("fin");
             sep="|";
         }
-        de = detalles.substring(0,detalles.search(";"));
+        de = detalles.substring(0,detalles.indexOf(sep));
+
+      // console.log("encontrado: "+detalles.indexOf(sep));
+
         nombre = de.substring(0,de.indexOf("-"));
-
-        axtodo = de.substring(de.indexOf("-")+1,de.indexOf(":"));
-        switch(parseInt(axtodo)){
-            case 1:{
-                tipo="Activo";
-                break;
-            }
-            case 2:{
-                tipo="Pasivo";
-                break;
-            }
-            case 3:{
-                tipo="Capital";
-                break;
-            }
-            case 41:{
-                tipo="Costos";
-                break;
-            }
-            case 42:{
-                tipo="Gastos";
-                break;
-            }
-            case 5:{
-                tipo="Ingresos";
-                break;
-            }
-        }
-
+        console.log(de);
+        cantidad = de.substring(de.indexOf("$")+1);
         axtodo = de.substring(de.indexOf(":")+1,de.indexOf(":")+2);
         if(axtodo=="D"){
             ubicacion="Debe";
         }else{
             ubicacion="Haber";
         }
-        cantidad = de.substring(de.indexOf("$"));
-        console.log(tipo+" "+nombre+" en el "+ubicacion+" son: "+cantidad);
+        
+
+        axtodo = de.substring(de.indexOf("-")+1,de.indexOf(":"));
+        switch(parseInt(axtodo)){
+            case 1:{
+                tipo="Activo";
+                if(ubicacion=="Debe"){
+                    contenidos[0]+= "<tr> <td colspan='3' >  "+nombre+": </td> <td colspan='2'>$"+cantidad+" </td> </tr>" ;
+                    totales[0]+=parseFloat(cantidad);
+                    totD+=parseFloat(cantidad);
+                }else{
+                    contenidos[3]+="<tr> <td colspan='3' >  "+nombre+": </td> <td colspan='2'>$"+cantidad+" </td> </tr>";
+                    totales[3]+=parseFloat(cantidad);
+                    totH+=parseFloat(cantidad);
+                }
+                break;
+            }
+            case 2:{
+                tipo="Pasivo";
+                if(ubicacion=="Debe"){
+                    contenidos[0]+= "<tr> <td colspan='3' >  "+nombre+": </td> <td colspan='2'>$"+cantidad+" </td> </tr>" ;
+                    totales[0]+=parseFloat(cantidad);
+                    totD+=parseFloat(cantidad);
+                }else{
+                    contenidos[1]+="<tr> <td colspan='3' >  "+nombre+": </td> <td colspan='2'>$"+cantidad+" </td> </tr>";
+                    totales[1]+=parseFloat(cantidad);
+                    totH+=parseFloat(cantidad);
+                }
+                break;
+            }
+            case 3:{
+                tipo="Capital";
+                if(ubicacion=="Debe"){
+                    contenidos[0]+= "<tr> <td colspan='3' >  "+nombre+": </td> <td colspan='2'>$"+cantidad+" </td> </tr>" ;
+                    totales[0]+=parseFloat(cantidad);
+                    totD+=parseFloat(cantidad);
+                }else{
+                    contenidos[2]+="<tr> <td colspan='3' >  "+nombre+": </td> <td colspan='2'>$"+cantidad+" </td> </tr>";
+                    totales[2]+=parseFloat(cantidad);
+                    totH+=parseFloat(cantidad);
+                }
+                break;
+            }
+            case 41:{
+                tipo="Costos";
+                if(ubicacion=="Debe"){
+                    contenidos[4]+= "<tr> <td colspan='3' >  "+nombre+": </td> <td colspan='2'>$"+cantidad+" </td> </tr>" ;
+                    totales[4]+=parseFloat(cantidad);
+                    totD+=parseFloat(cantidad);
+                }else{
+                    contenidos[3]+="<tr> <td colspan='3' >  "+nombre+": </td> <td colspan='2'>$"+cantidad+" </td> </tr>";
+                    totales[3]+=parseFloat(cantidad);
+                    totH+=parseFloat(cantidad);
+                }
+                break;
+            }
+            case 42:{
+                tipo="Gastos";
+                if(ubicacion=="Debe"){
+                    contenidos[5]+= "<tr> <td colspan='3' >  "+nombre+": </td> <td colspan='2'>$"+cantidad+" </td> </tr>" ;
+                    totales[5]+=parseFloat(cantidad);
+                    totD+=parseFloat(cantidad);
+                }else{
+                    contenidos[3]+="<tr> <td colspan='3' >  "+nombre+": </td> <td colspan='2'>$"+cantidad+" </td> </tr>";
+                    totales[3]+=parseFloat(cantidad);
+                    totH+=parseFloat(cantidad);
+                }
+                break;
+            }
+            case 5:{
+                tipo="Ingresos";
+                if(ubicacion=="Debe"){
+                    contenidos[0]+= "<tr> <td colspan='3' >  "+nombre+": </td> <td colspan='2'>$"+cantidad+" </td> </tr>" ;
+                    totales[0]+=parseFloat(cantidad);
+                    totD+=parseFloat(cantidad);
+                }else{
+                    contenidos[3]+="<tr> <td colspan='3' >  "+nombre+": </td> <td colspan='2'>$"+cantidad+" </td> </tr>";
+                    totales[3]+=parseFloat(cantidad);
+                    totH+=parseFloat(cantidad);
+                }
+                break;
+            }
+        }
+        console.log("algo "+contenidos[0]);
+
+        console.log(tipo+" "+nombre+" en el "+ubicacion+" son: $"+cantidad);
         detalles = detalles.substring(detalles.indexOf(sep)+1);
         de = detalles.substring(0,detalles.indexOf(sep));
+
     }
+    if(bc=="comprobacion"){
+        ponerdentro("contenidoA",contenidos[0]);
+        ponerval("totA",totales[0]);
+
+        ponerdentro("contenidoP",contenidos[1]);
+        ponerval("totP",totales[1]);
+
+        ponerdentro("contenidoCp",contenidos[2]);
+        ponerval("totCp",totales[2]);
+
+        ponerdentro("contenidoI",contenidos[3]);
+        ponerval("totI",totales[3]);
+
+        ponerdentro("contenidoC",contenidos[4]);
+        ponerval("totC",totales[4]);
+
+        ponerdentro("contenidoG",contenidos[5]);
+        ponerval("totG",totales[5]);
+
+
+        ponerval("totD",totD);
+        ponerval("totH",totH);
+}
 //falta irlos agregando a los contenido y las sumas
 
 }
