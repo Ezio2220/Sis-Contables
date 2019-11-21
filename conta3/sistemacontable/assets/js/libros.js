@@ -13,7 +13,7 @@
   firebase.initializeApp(firebaseConfig);
 //######################################################################################################
 
-//#######################################################################funciones auxiliares###############################
+//##########################################################################################################################funciones auxiliares###############################
 function obtenerval(id){
     return document.getElementById(id).value;
 }
@@ -34,6 +34,29 @@ function ponerdentro(id,val){
 function listatexto(id){
     var ax = document.getElementById(id).options.selectedIndex;
     return document.getElementById(id).options.item(ax).text;
+}
+
+function imprimir(id="detalles",mes,contenido="M"){
+    var titulo;
+    var sub;
+    if(contenido=="M"){
+        titulo = "<h1> EMPRESA X LIBRO MAYOR  </h1> <br>";
+    }else if(contenido=="D"){
+        titulo = "<h1> EMPRESA X LIBRO DIARIO  </h1> <br>";
+    }
+    
+    sub = "<h2>"+mes+"</h2>";
+    var ventana = window.open('','PRINT', 'height=400,width=600');
+    ventana.document.write('<html><head>');
+    ventana.document.write( "<link href='assets/css/bootstrap.min.css' rel='stylesheet'/>");
+    ventana.document.write("</head><body onload='window.print();window.close();'> <div style='width: 100%' ><center>");
+    ventana.document.write(titulo+sub+"<br><br>");
+    if(contenido=="M" || contenido=="D"){
+        ventana.document.write("<table style='width:80%;'  border='1px'>"+obtenerdentro("detalles")+"</table>");
+    }
+    ventana.document.write('</center></div></body></html>');
+    ventana.document.close(); // necesario para IE >= 10
+    ventana.focus(); // necesario para IE >= 10
 }
 //######################################################################################################
 
@@ -141,7 +164,7 @@ function agregarD(){
     }
     
 }
-//##############################################################guardar en la bd
+//###################################################################################################################################guardar en la bd
 function guardarD(){
    
     if(obtenerdentro("debet")==obtenerdentro("habert") && obtenerdentro("debet")!="$0.00" && obtenerdentro("habert")!="$0.00" ){
@@ -203,33 +226,9 @@ function guardarD(){
     }else{
         alert("falta alguna cuenta la suma del debe y haber debe ser igual");
     }
-
-
 }
-//#########################################################################################################################################
+//##############################################################################################################################################################################
 
-function imprimir(id="detalles",mes,contenido="M"){
-    var titulo;
-    var sub;
-    if(contenido=="M"){
-        titulo = "<h1> EMPRESA X LIBRO MAYOR  </h1> <br>";
-    }else if(contenido=="D"){
-        titulo = "<h1> EMPRESA X LIBRO DIARIO  </h1> <br>";
-    }
-    
-    sub = "<h2>"+mes+"</h2>";
-    var ventana = window.open('','PRINT', 'height=400,width=600');
-    ventana.document.write('<html><head>');
-    ventana.document.write( "<link href='assets/css/bootstrap.min.css' rel='stylesheet'/>");
-    ventana.document.write("</head><body onload='window.print();window.close();'> <div style='width: 100%' ><center>");
-    ventana.document.write(titulo+sub+"<br><br>");
-    if(contenido=="M" || contenido=="D"){
-        ventana.document.write("<table style='width:80%;'  border='1px'>"+obtenerdentro("detalles")+"</table>");
-    }
-    ventana.document.write('</center></div></body></html>');
-    ventana.document.close(); // necesario para IE >= 10
-    ventana.focus(); // necesario para IE >= 10
-}
 function axdiario(){
     var id = obtenerval("partida");
     var bd = firebase.database().ref("LDiario");
@@ -599,3 +598,26 @@ function cargar(){
     });
 }
 
+function comprobacion(){
+
+}
+function cargarM(id="cons"){
+    var lista = obtenerelm(id);
+    var db = firebase.database().ref("LMayor");
+    var meses = new Array();
+    meses.push("Enero");meses.push("Febrero");meses.push("Marzo");meses.push("Abril");meses.push("Mayo");meses.push("Junio");
+    meses.push("Julio");meses.push("Agosto");meses.push("Septiembre");meses.push("Octubre");meses.push("Noviembre");meses.push("Diciembre");
+    var op;
+    db.once("value",function(snap){
+        var aux = snap.val();
+        for(var data in aux){
+            if(data!="partidas"){
+                op = document.createElement("option");
+                op.text= meses[(parseInt(data.substring(5))-1)] +" del "+ data.substring(0,4);
+                op.value= data;
+                lista.add(op);
+            }
+
+        }
+    });
+}
