@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="balanceCom.js"></script>
+    <title>Balace de comprobacion</title>
+</head>
+<body>
+
+    <form>
+            Activo: <select name="activo" id="activo">
+
+                <option selected value="Efectivo y equivalente de efectivo">Efectivo y equivalente de efectivo</option>
+                <option value="Edificio" >Edificio</option>
+                <option value="Mercaderia" >Mercaderia</option>
+                <option value="Mobiliario y equipo" >Mobiliario y equipo</option>
+                <option value="Doc. por cobrar" >Doc. por cobrar</option>
+                <option value="Cliente">Cliente</option>
+                <option value="Remanente de IVA" >Remanente de IVA</option>
+                <option value="Equi. de Transporte" >Equi. de Transporte</option>
+                </select>
+                valor: <input type="text" id="valor">
+                <input type="button" onclick=" agregarActivo()" value="Agregar activo">
+                <br>
+                <br>
+
+            Pasivo: <select name="pasivo" id="pasivo">
+                <option selected value="Acreedores" >Acreedores</option>
+                <option value="Acreedores Bancarios" >Acreedores Bancarios</option>
+                <option value="Acreedores varios" >Acreedores varios</option>
+                <option value="Impust. por pagar" >Impust. por pagar</option>
+                <option value="Proveedores" >Proveedores</option>
+                </select>
+                valor: <input type="text" id="valor1">
+                <input type="button" onclick=" agregarPasivo()" value="Agregar pasivo">
+                <br>
+                <br>
+                
+            Capital: <select name="capital" id="capital">
+                <option selected value="Capital Social">Capital Social</option>
+                </select>
+                valor: <input type="text" id="valor2">
+                <input type="button" onclick=" agregarCapital()" value="Agregar capital">
+                <br>
+                <br>
+
+            Ingresos: <select name="ingreso" id="ingreso">
+                <option selected value="Ventas" >Ventas</option>
+                <option value="Ingresos por servicio" >Ingresos por servicio</option>
+                <option value="Ingresos Financiero" >Ingreso Financiero</option>
+                <option value="Otros productos" >Otros productos</option>
+                </select>
+                valor: <input type="text" id="valor3">
+                <input type="button" onclick=" agregarIngreso()" value="Agregar ingreso">
+                <br>
+                <br>
+
+            Costos: <select name="costo" id="costo">
+                <option selected value="Costos de venta" >Costos de venta</option>
+                </select>
+                valor: <input type="text" id="cos">
+                <input type="button" onclick=" agregarCostos()" value="Agregar costo">
+                <br>
+                <br>
+
+            Gastos: <select name="gasto" id="gasto">
+                <option selected value="Gastos de venta" >Gastos de venta</option>
+                <option value="Gastos de administracion" >Gastos de administracion</option>
+                <option value="Gastos Financiero" >Gastos Financiero</option>
+                </select>
+                valor: <input type="text" id="valor5">
+                <input type="button" onclick=" agregarGastos()" value="Agregar gasto">
+                <br>
+                <br>
+
+            <table style="width: 100%"  border="1px">
+                    <thead >
+                        <th style="width: 50%" >Balance de comprobacion</th>
+                        <th style="width: 20%" >debe</th>
+                        <th style="width: 20%" >Haber</th>
+                    </thead>
+                    <tbody id="contenido" >
+                        <tr style="height: 30px" >
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <!-- se agrega id a las sumas del debe y del haber para poder tomar sus valores en js  -->
+                            <td>Totales:</td>
+                            <td id="debet">$0.00</td>
+                            <td id="habert" >$0.00</td>
+                        </tr>
+                    </tfoot>
+                </table>
+    </form>
+    
+</body>
+</html>
