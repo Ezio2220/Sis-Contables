@@ -35,7 +35,7 @@ function listatexto(id){
     var ax = document.getElementById(id).options.selectedIndex;
     return document.getElementById(id).options.item(ax).text;
 }
-
+//################################################################################IMPRIMIR DATOS!!!!!!!!!!!!!!!!!!###############################################
 function imprimir(id="detalles",mes,contenido="M"){
     var titulo;
     var sub;
@@ -58,7 +58,7 @@ function imprimir(id="detalles",mes,contenido="M"){
     ventana.document.close(); // necesario para IE >= 10
     ventana.focus(); // necesario para IE >= 10
 }
-//######################################################################################################
+//##########################################################################################################################################################
 
 function pre(){
     var f = new Date();
