@@ -604,13 +604,73 @@ function comprobacion(){
     var sep=";";
     var totD=0;
     var totH=0;
+    var nombre;
+    var tipo;
+    var cantidad;
+    var ubicacion;
+    var de ;
+    var contenidos = new Array(6);
+    var axtodo;
+    for(var i in contenidos){
+        contenidos[i]="";
+    }
+    var totales = new Array(6);
+    for(var i in totales){
+        totales[i]=0;
+    }
     for(var i = 0; i < detalles.length; i++) {
         if (detalles[i] === ";") indices.push(i);
     }
-    for(var i in indices){
-        sep=";";
-    }
 
+    for(var i in indices){
+
+        if(detalles.indexOf(sep)==-1){
+            console.log("fin");
+            sep="|";
+        }
+        de = detalles.substring(0,detalles.search(";"));
+        nombre = de.substring(0,de.indexOf("-"));
+
+        axtodo = de.substring(de.indexOf("-")+1,de.indexOf(":"));
+        switch(parseInt(axtodo)){
+            case 1:{
+                tipo="Activo";
+                break;
+            }
+            case 2:{
+                tipo="Pasivo";
+                break;
+            }
+            case 3:{
+                tipo="Capital";
+                break;
+            }
+            case 41:{
+                tipo="Costos";
+                break;
+            }
+            case 42:{
+                tipo="Gastos";
+                break;
+            }
+            case 5:{
+                tipo="Ingresos";
+                break;
+            }
+        }
+
+        axtodo = de.substring(de.indexOf(":")+1,de.indexOf(":")+2);
+        if(axtodo=="D"){
+            ubicacion="Debe";
+        }else{
+            ubicacion="Haber";
+        }
+        cantidad = de.substring(de.indexOf("$"));
+        console.log(tipo+" "+nombre+" en el "+ubicacion+" son: "+cantidad);
+        detalles = detalles.substring(detalles.indexOf(sep)+1);
+        de = detalles.substring(0,detalles.indexOf(sep));
+    }
+//falta irlos agregando a los contenido y las sumas
 
 }
 function cargarM(id="cons"){
