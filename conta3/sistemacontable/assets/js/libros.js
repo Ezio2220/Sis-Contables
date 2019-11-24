@@ -990,3 +990,83 @@ function cargarM(id="cons"){
         }
     });
 }
+
+//################################################################################################################################
+function login(){
+    var user=obtenerval("usuario");
+    var pass=obtenerval("contra");
+    const verify = firebase.auth();
+    
+    verify.signInWithEmailAndPassword(user, pass).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        alert("ERROR "+errorMessage);
+       // location.reload();
+        console.log(error);
+        //return;
+        // ...
+    });
+  /*  var comp = verify.currentUser;
+    if(comp){
+        alert(comp.email+" accediendo..");
+        window.location.href = '../conta3/sistemacontable/index.html';
+    }else{
+        alert("datos incorrectos");
+    }*/
+    sesion();
+   /* verify.onAuthStateChanged(firebaseUser=>{
+        alert(firebaseUser);
+        if(firebaseUser){
+            alert("accediendo..");
+            window.location.href = '../conta3/sistemacontable/index.html';
+        }else{
+            alert("datos incorrectos");
+        }
+    });*/
+
+   // alert("lol");
+   // window.location.href = '../conta3/sistemacontable/index.html';
+
+}
+function salir(){
+    const verify = firebase.auth();
+    verify.signOut();
+    alert("Cerrando sesion..");
+    if(window.location.href.search("login")!=-1){
+        location.reload();
+    }else{
+         sesion(1);
+    }
+   
+    
+}
+function sesion(rp=0){
+    //var base="file:///D:/works/0/2019/Contables/Sis-Contables/conta3/sistemacontable/";
+    const verify = firebase.auth();
+    verify.onAuthStateChanged(firebaseUser=>{
+        if(firebaseUser){
+            if(window.location.href.search("login")!=-1){
+                alert("correcto");
+                window.location.href = '../conta3/sistemacontable/index.html';
+            }
+            console.log("CORRECTO!!!!!!!!!!");
+        }else{
+            if(window.location.href.search("login")!=-1){
+              /*  alert("datos incorrectos");
+                location.reload();*/
+            }else{
+                if(rp==0){
+                    console.log("NO ESTA LOGEADO");
+                  //  alert(window.location.href);
+                    alert("DEBE INICIAR SESION!");
+                    window.location.href = "../../conta/login.html";
+                }else{
+                    window.location.href = "../../conta/login.html";
+                }
+
+            }
+
+        }
+    });
+}
