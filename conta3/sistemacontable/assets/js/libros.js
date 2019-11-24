@@ -363,12 +363,13 @@ function guardarM(){
             if(det.length>0){
                 det+=";";
             }
+
             titleax= tabla.rows[i].cells[0].innerHTML;
             titulo = titleax.substring(titleax.indexOf(" ")+1);
             totax = titleax.substring(0,titleax.indexOf(" "));
             total = obtenerdentro(totax).substring(1);
             tipo = parseInt(totax[0]);
-
+            var axtipo = parseInt(totax.substring(0,2));//cambios
             if(tipo==1 || tipo== 5 || tipo== 6){
                 if(total[0]=="-"){
                     ubicacion = "H";
@@ -384,7 +385,12 @@ function guardarM(){
                     ubicacion = "H";
                 }
             }
-            det+=titulo+"-"+tipo+":"+ubicacion+"$"+total;
+            if( parseFloat(total)== 0 || ((totax=="110601" || totax=="210702") && (obtenerelm("222222")!=null || obtenerelm("111111")!=null) ) ){
+                det = det.substring(0,det.length-1);
+            }else{
+                 det+=titulo+"-"+axtipo+":"+ubicacion+"$"+total;//cambios
+            }
+           
         }
         if(i+1==tabla.rows.length){
             det+="|";
@@ -495,10 +501,24 @@ function cargar(){
     var titlerep = true;
     var totD=0;
     var totH=0;
+    var CFI=0;
+    var DFI=0;
+    var ajuste =false;
     //contenido
     bd.once("value",function(snap){
         var aux = snap.val();
       //  alert(obtenerelm("cuenta").length);
+      var iajuste=0;
+      for(var axajuste=0;axajuste<obtenerelm("cuenta").length;axajuste++){
+        cuenta = document.getElementById("cuenta").options.item(axajuste).value;
+        if(cuenta=="110601" || cuenta=="210702"){
+            iajuste++;
+        }
+      }
+      if(iajuste==2){
+          ajuste=true;
+      }
+
         for(var re =0; re<obtenerelm("cuenta").length;re++){
             tbl="";
             titlerep = true;
@@ -530,6 +550,8 @@ function cargar(){
                         }
                         de = detax.substring(0,detax.indexOf(sep));
                         if(de.substring(0,de.indexOf(" "))==cuenta){
+                            var ajusteiva= de.substring(0,de.indexOf(" "));
+
                         console.log(detax);
                                          //arr[0]=n;
                                          arr[0]=data.substring(data.indexOf("x")+1);
@@ -548,6 +570,13 @@ function cargar(){
                         
                         console.log(de.search(":")+1);
                         var val = de.substring(de.search(":")+1,de.length);
+                        
+                        if(ajusteiva=="110601"){
+                            CFI+=parseFloat(val.substring(1));
+                        }else if(ajusteiva=="210702"){
+                            DFI+=parseFloat(val.substring(1));
+                        }
+                    
                         if(pos=="D"){
                             console.log(pos+" esta en el debe");
                             arr[2]=val;arr[3]="$0.00";
@@ -579,6 +608,7 @@ function cargar(){
                             tbl+= filltabla(5,arr,1);
                         }
                         n++
+
                         }
                         console.log("final");
                         detax = detax.substring(detax.indexOf(sep)+1);
@@ -588,6 +618,36 @@ function cargar(){
             }
             tbl+="<tr> <td style='font-weight:bolder;' class='text-center' colspan='3' >TOTAL:</td><td id='"+cuenta+"' style='font-weight:bolder;' class='text-center' colspan='2'>$"+arr[4]+"</td></tr>"
             ponerdentro("contenido", obtenerdentro("contenido")+tbl);
+        }
+      /*  console.log("debe aparecer lolito: ");
+        if(obtenerelm("lolito")==null){
+            console.log("lolito no esta");
+        }
+        //console.log(obtenerelm("lolito"));*/
+        if(ajuste){
+            var total;
+            arr[0]=0; 
+            if(CFI>DFI){
+               total = parseFloat(CFI)-parseFloat(DFI);
+               total=Math.round10(total, -2);
+               arr[1]="Ajuste de IVA";
+               arr[2]="$"+CFI;
+               arr[3]="$"+DFI;
+               arr[4]="$"+total;
+               tbl+=filltabla(5,arr,"111111 Remanente de IVA");
+               tbl+="<tr> <td style='font-weight:bolder;' class='text-center' colspan='3' >TOTAL:</td><td id='111111' style='font-weight:bolder;' class='text-center' colspan='2'>$"+total+"</td></tr>"
+            }else{
+                total = parseFloat(DFI)-parseFloat(CFI);
+                total=parseFloat(Math.round(total * 100) / 100).toFixed(2);
+                
+                arr[1]="Ajuste de IVA";
+                arr[2]="$"+CFI;
+                arr[3]="$"+DFI;
+                arr[4]="$"+total;
+                tbl+=filltabla(5,arr,"222222 Impuestos por Pagar");
+                tbl+="<tr> <td style='font-weight:bolder;' class='text-center' colspan='3' >TOTAL:</td><td id='222222' style='font-weight:bolder;' class='text-center' colspan='2'>$"+total+"</td></tr>"
+            }
+            ponerdentro("contenido", obtenerdentro("contenido")+tbl); 
         }
         parseFloat(totD)<0?totD*=-1:'';
         parseFloat(totH)<0?totH*=-1:'';
@@ -609,6 +669,12 @@ function comprobacion(bc="comprobacion"){
     var cantidad;
     var ubicacion;
     var de ;
+    var vnta=0;
+    var ctvnta=0;
+  /*  var gasto= new Array(3);
+    gasto[0]=0;//
+    gasto[1]=0;//
+    gasto[2]=0;//*/
     var contenidos = new Array(6);//A,P,C,I,Costos,G
     var axtodo;
     for(var i=0;i<6;i++){
@@ -642,9 +708,15 @@ function comprobacion(bc="comprobacion"){
             ubicacion="Haber";
         }
         
-
+        
         axtodo = de.substring(de.indexOf("-")+1,de.indexOf(":"));
-        switch(parseInt(axtodo)){
+        var compaxtodo ;
+        if(axtodo[0]==1 || axtodo[0]==2){
+            compaxtodo=axtodo[0];
+        }else{
+            compaxtodo=axtodo;
+        }
+        switch(parseInt(compaxtodo)){
             case 1:{
                 tipo="Activo";
                 if(ubicacion=="Debe"){
@@ -686,6 +758,9 @@ function comprobacion(bc="comprobacion"){
             }
             case 41:{
                 tipo="Costos";
+                if(nombre=="Costo de ventas"){
+                    ctvnta+=parseFloat(cantidad);
+                }
                 if(ubicacion=="Debe"){
                     contenidos[4]+= "<tr> <td colspan='3' >  "+nombre+": </td> <td colspan='2'>$"+cantidad+" </td> </tr>" ;
                     totales[4]+=parseFloat(cantidad);
@@ -712,6 +787,9 @@ function comprobacion(bc="comprobacion"){
             }
             case 5:{
                 tipo="Ingresos";
+                if(nombre=="Ventas"){
+                    vnta+=parseFloat(cantidad);
+                }
                 if(ubicacion=="Debe"){
                     contenidos[0]+= "<tr> <td colspan='3' >  "+nombre+": </td> <td colspan='2'>$"+cantidad+" </td> </tr>" ;
                     totales[0]+=parseFloat(cantidad);
@@ -731,6 +809,10 @@ function comprobacion(bc="comprobacion"){
         de = detalles.substring(0,detalles.indexOf(sep));
 
     }
+    var utilidades = new Array(4);
+    utilidades[0]=0;utilidades[1]=0;utilidades[2]=0;utilidades[3]=0;
+    //bruta, operacion, impuesto, neta
+
     if(bc=="comprobacion"){
         ponerdentro("contenidoA",contenidos[0]);
         ponerval("totA",totales[0]);
@@ -753,7 +835,49 @@ function comprobacion(bc="comprobacion"){
 
         ponerval("totD",totD);
         ponerval("totH",totH);
+}else if(bc=="resultados"){
+    var calculo;console.log("venta: "+vnta);
+    ponerval("totVenta",vnta);console.log("costo: "+ctvnta);
+    ponerval("totCosVent",totales[4]);
+    calculo = parseFloat(vnta)-parseFloat(totales[4]);console.log("bruta: "+calculo);
+
+    ponerval("totUtBruta",calculo);console.log("gastos op: "+totales[5]);
+    ponerval("totGastOP",totales[5]);
+    calculo -=  parseFloat(totales[5]);
+    //ponerval("tot")
+    calcaux = parseFloat(totales[3])-parseFloat(vnta);console.log("Otros ingresos :"+calcaux);
+    ponerval("totOtroIng",calcaux);
+    calculo += parseFloat(calcaux);console.log("operacion :"+calculo);
+    ponerval("totUtiOP",calculo);
+    calcaux = parseFloat(calculo)*0.05;//reserva para sociedad de capital variable 5%
+    console.log("reserva: "+calcaux);
+    ponerval("totReserva",calcaux);
+    calculo-= parseFloat(calcaux);console.log("util impuesto: "+calculo);
+    ponerval("totUtilImpuesto",calculo);
+    if(parseFloat(totales[3])>150000){
+        calcaux = parseFloat(calculo)*0.3;
+    }else{
+        calcaux = parseFloat(calculo)*0.25;
+    }console.log("tot impuesto: "+calcaux);
+    ponerval("totImpuesto",calcaux);
+    calculo-= parseFloat(calcaux);console.log("neta: "+calculo);
+    ponerval("totUtilNeta",calculo);
+
+}else if(bc=="general"){
+    var calcaux;
+    utilidades[0]=parseFloat(vnta)-parseFloat(totales[4]);
+    utilidades[1]=parseFloat(utilidades[0])-parseFloat(totales[5])+(parseFloat(totales[3])-parseFloat(vnta));
+    utilidades[2]=parseFloat(utilidades[1])-(parseFloat(utilidades[1])*0.05);
+    if(parseFloat(totales[3])>150000){
+        calcaux = parseFloat(utilidades[2])*0.3;
+    }else{
+        calcaux = parseFloat(utilidades[2])*0.25;
+    }
+    utilidades[3]=parseFloat(utilidades[2])-parseFloat(calcaux);
+
+
 }
+
 //falta irlos agregando a los contenido y las sumas
 
 }

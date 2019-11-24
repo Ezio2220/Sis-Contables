@@ -132,96 +132,73 @@
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-12">
                         <div class="card">
                             <div class="header">
-                                <h4 class="title">Datos</h4>
+                                <h4 class="title">Balance General</h4>
                             </div>
+                            <div class="content">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-md-8 col-md-offset-2">
+                                            <div class="text-center">
+                                                <label for="cons">Seleccione Mes A Comprobar</label>
+                                            <select name="contbg" id="contbg">
+                                            </select>
+                                            <input onclick="" class="btn btn-primary" type="button" value="Generar Balance">
+                                            </div>
+                                            <br>
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class=" card strpied-tabled-with-hover">                                        
+                                                            <table class="table table-hover">                    
+                                                                <tr><th  colspan="5">Activo</th></tr>
+                                                                <tr><th colspan="5">Activo Corriente</th></tr>
+                                                                <tbody id="contenidoAC">    
+                                                                                                                                            
+                                                                </tbody>                                                                                        
+                                                                <th colspan="3">Total Activo Corriente: </th><td colspan="2"><input type="text" readonly class="form-control" name="totAC" id="totAC"></td>                                                                                        
+                                                                <tr><th colspan="4">Activo no Corriente</th></tr>
+                                                                <tbody id="contenidoANC">                                                                            
+                                                                </tbody>                                                                                       
+                                                                <th colspan="3">Total Activo no Corriente: </th><td colspan="2"><input type="text" readonly class="form-control" name="totANC" id="totANC"></td>                                                                    
+                                                                <tfoot>
+                                                                    <th colspan="3">Total Activo: </th><td colspan="2"><input type="text" readonly class="form-control" name="totA" id="totA"></td>
+                                                                </tfoot>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                <div class="col-md-4">
+                                                    <div class="card strpied-tabled-with-hover">
+                                                        <table class="table table-hover">                
+                                                                <tr><th  colspan="5">Pasivo</th></tr>
+                                                                <tr><th colspan="5">Pasivo Corriente</th></tr>
+                                                                <tbody id="contenidoPC">                                                                            
+                                                                </tbody>                                                                                        
+                                                                <th colspan="3">Total Pasivo Corriente: </th><td colspan="2"><input type="text" readonly class="form-control" name="totPC" id="totPC"></td>                                                                                        
+                                                                <tr><th colspan="4">Pasivo no Corriente</th></tr>
+                                                                <tbody id="contenidoPNC">                                                                            
+                                                                </tbody>                                                                                    
+                                                                <th colspan="3">Total Pasivo no Corriente: </th><td colspan="2"><input type="text" readonly class="form-control" name="totPNC" id="totPNC"></td>                                                                
+                                                                <tr><th colspan="3">Total Pasivo: </th><td colspan="2"><input type="text" readonly class="form-control" name="totPasi" id="totPasi"></td></tr>                                                                
+                                                                <tr><th colspan="4">Patrimonio</th></tr>
+                                                                <tbody id="contenidoPatri">    
+                                                                </tbody>                                                                    
+                                                                <th colspan="3">Total Patrimonio: </th><td colspan="2"><input type="text" readonly class="form-control" name="totPatri" id="totPatri"></td>                                                                    
+                                                                <tfoot>
+                                                                    <th colspan="3">Total Patrimonio mas Pasivo: </th><td colspan="2"><input type="text" readonly class="form-control" name="totPatriP" id="totPatriP"></td>
+                                                                </tfoot>
+                                                        </table>                                                                                    
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>          
                         </div>
                     </div>
 
                     
-                    <div class="content">
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-md-8 col-md-offset-2">
-                                    <div class="text-center">
-                                        <label for="cons">Seleccione Mes A Comprobar</label>
-                                    <select name="contbg" id="contbg">
-                                    </select>
-                                    <input onclick="" class="btn btn-primary" type="button" value="Generar Balance">
-                                    </div>
-                                    <br>
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class=" card strpied-tabled-with-hover">                                        
-                                                    <table class="table table-hover">
-            
-                                                        <tr><th  colspan="5">Activo</th></tr>
-                                                        <tr><th colspan="5">Activo Corriente</th></tr>
-                                                        <tbody id="contenidoAC">
-                                                                    
-                                                        </tbody>
-            
-                                                            
-                                                        <th colspan="3">Total Activo Corriente: </th><td colspan="2"><input type="text" readonly class="form-control" name="totAC" id="totAC"></td>
-                                                            
-            
-                                                        <tr><th colspan="4">Activo no Corriente</th></tr>
-                                                        <tbody id="contenidoANC">
-                                                                    
-                                                        </tbody>
-            
-                                                            
-                                                        <th colspan="3">Total Activo no Corriente: </th><td colspan="2"><input type="text" readonly class="form-control" name="totANC" id="totANC"></td>
-                                                            
-                                                        <tfoot>
-                                                            <th colspan="3">Total Activo: </th><td colspan="2"><input type="text" readonly class="form-control" name="totA" id="totA"></td>
-                                                        </tfoot>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        <div class="col-md-4">
-                                            <div class="card strpied-tabled-with-hover">
-                                                <table class="table table-hover">
-        
-                                                        <tr><th  colspan="5">Pasivo</th></tr>
-                                                        <tr><th colspan="5">Pasivo Corriente</th></tr>
-                                                        <tbody id="contenidoPC">
-                                                                    
-                                                        </tbody>
-            
-                                                            
-                                                        <th colspan="3">Total Pasivo Corriente: </th><td colspan="2"><input type="text" readonly class="form-control" name="totPC" id="totPC"></td>
-                                                            
-            
-                                                        <tr><th colspan="4">Pasivo no Corriente</th></tr>
-                                                        <tbody id="contenidoPNC">
-                                                                    
-                                                        </tbody>
-            
-                                                            
-                                                        <th colspan="3">Total Pasivo no Corriente: </th><td colspan="2"><input type="text" readonly class="form-control" name="totPNC" id="totPNC"></td>
-                                                        
-                                                        <tr><th colspan="3">Total Pasivo: </th><td colspan="2"><input type="text" readonly class="form-control" name="totPasi" id="totPasi"></td></tr>
-                                                        
-                                                        <tr><th colspan="4">Patrimonio</th></tr>
-                                                        <tbody id="contenidoPatri">
-                                                                    
-                                                        </tbody>
-            
-                                                            
-                                                        <th colspan="3">Total Patrimonio: </th><td colspan="2"><input type="text" readonly class="form-control" name="totPatri" id="totPatri"></td>
-                                                            
-                                                        <tfoot>
-                                                            <th colspan="3">Total Patrimonio mas Pasivo: </th><td colspan="2"><input type="text" readonly class="form-control" name="totPatriP" id="totPatriP"></td>
-                                                        </tfoot>
-                                                </table>                                                                                    
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>            
+  
                             </div>
                          </div>
                     </div>
