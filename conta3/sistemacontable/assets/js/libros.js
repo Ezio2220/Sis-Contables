@@ -37,24 +37,25 @@ function listatexto(id){
 }
 //################################################################################IMPRIMIR DATOS!!!!!!!!!!!!!!!!!!###############################################
 function imprimir(id="detalles",mes,contenido="M"){
-    var titulo;
-    var sub;
-    if(contenido=="M"){
-        titulo = "<h1> EMPRESA X LIBRO MAYOR  </h1> <br>";
-    }else if(contenido=="D"){
+    var titulo; //aca se guarda el titulo :v , arriba en la funcion pido 3 cosas, el id de la tabla original que pasara a imprimirse con todos sus datos
+    var sub;     //esta var es para el subtititulo, mes traera el mes en letras para mostrarlo, contenido determina que se imprimira
+    if(contenido=="M"){//M es para libro mayor
+        titulo = "<h1> EMPRESA X LIBRO MAYOR  </h1> <br>";//´pone el titulo de libro mayor dentro de una etiqueta h1 y con un espacio despues br
+    }else if(contenido=="D"){//D es para libro diario osea si yo pongo imprimir('detalles','20 de febrero','D'); estare imprimiendo un libro diario jalando la tabla con el id detalles con la fecha de 20 de frebrero
         titulo = "<h1> EMPRESA X LIBRO DIARIO  </h1> <br>";
     }
     
-    sub = "<h2>"+mes+"</h2>";
-    var ventana = window.open('','PRINT', 'height=400,width=600');
-    ventana.document.write('<html><head>');
-    ventana.document.write( "<link href='assets/css/bootstrap.min.css' rel='stylesheet'/>");
-    ventana.document.write("</head><body onload='window.print();window.close();'> <div style='width: 100%' ><center>");
-    ventana.document.write(titulo+sub+"<br><br>");
-    if(contenido=="M" || contenido=="D"){
-        ventana.document.write("<table style='width:80%;'  border='1px'>"+obtenerdentro("detalles")+"</table>");
+    sub = "<h2>"+mes+"</h2>";//eñ sub titulo es el mes entre etiquetas h2 para que sea mas grande
+    var ventana = window.open('','PRINT', 'height=400,width=600');//esto abre una nueva ventana con 400 de alto por 600 de ancho
+    ventana.document.write('<html><head>');//esto hace que dentro de esa ventana se pongan estas etiquetas
+    ventana.document.write( "<link href='assets/css/bootstrap.min.css' rel='stylesheet'/>");//luego van estas de bootrap para estilos
+    ventana.document.write("</head><body onload='window.print();window.close();'> <div style='width: 100%' ><center>");//y luego se pone el body con el evento onload para que al nomas cargar abra la ventana de imprimir y luego se cierre
+    ventana.document.write(titulo+sub+"<br><br>");//luego agrega el titulo el subtitulo y 2 espacios
+    if(contenido=="M" || contenido=="D"){//luego si es libro mayor o libro diario se mandara a agregar una tabla que tambien jalara dentro de ella los datos de la tabla con el id "detalles" del documento original
+        ventana.document.write("<table style='width:80%;'  border='1px'>"+obtenerdentro("detalles")+"</table>");//y cerramos la tabla
     }
-    ventana.document.write('</center></div></body></html>');
+    ventana.document.write('</center></div></body></html>');//cerramos el documento html
+    //basicamente  todo lo que esta del ventana.document.write(); sera codigo html que se agregara a la ventana
     ventana.document.close(); // necesario para IE >= 10
     ventana.focus(); // necesario para IE >= 10
 }
