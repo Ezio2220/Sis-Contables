@@ -85,7 +85,7 @@ input[type="password"] {
   -webkit-border-radius: 0px 3px 3px 0px;
   -moz-border-radius: 0px 3px 3px 0px;
 }
-input[type="submit"] {
+input[type="button"] {
   width: 237px;
   height: 40px;
   margin-left: 17px;
@@ -96,7 +96,7 @@ input[type="submit"] {
   -webkit-border-radius: 2px 2px 12px 12px;
   -moz-border-radius: 2px 2px 12px 12px;
 }
-input[type="submit"]:hover {
+input[type="button"]:hover {
   background-color: #607d8b;
   color: #f8f8f8;
   cursor: pointer;
