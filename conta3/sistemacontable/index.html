@@ -30,7 +30,7 @@
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
     <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
 </head>
-<body onload="pre2();cargarc();">
+<body onload="sesion();pre2();cargarc();">
 
 <div class="wrapper">
     <div class="sidebar" data-color="blue" data-image="assets/img/sidebar-5.jpg">
@@ -118,7 +118,7 @@
                         </li>
                         
                         <li>
-                            <a href="#">
+                            <a onclick="salir();" href="#">
                                 <p>Cerrar sesion</p>
                             </a>
                         </li>
@@ -134,7 +134,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card">
-                            <div class="header">
+                            <center><div class="header">
                                 <h4 align="center" class="title">Consultar Libro diario</h4>
                             </div>
                             <form action="">
@@ -149,7 +149,7 @@
                                 </div>                              
                                 
                                 <br>
-                                <table id="detalles" class="table table-hover table-striped" style="width: 100%"  border="1px" >
+                                <table id="detalles" class="table table-hover table-striped" style="width: 100%"  >
                                     <thead>
                                         <th style="width: 15%">Fecha</th>
                                         <th style="width: 45%">Descripcion</th>
@@ -163,7 +163,7 @@
                                 <br>
                                 <input class="btn btn-primary" onclick="imprimir('detalles',listatexto('partida'),'D');" type="button" value="Imprimir Libro Diario">
                             </form>
-                        </div>
+                        </div></center>
                     </div>
                     
 
@@ -201,15 +201,10 @@
 </body>
 
     <!--   Core JS Files   -->
-    <script src="assets/js/jquery.3.2.1.min.js" type="text/javascript"></script>
+    <script src="assets/js/core/jquery.3.2.1.min.js" type="text/javascript"></script>
+    
     <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase.js"></script>
     <script src="assets/js/libros.js"></script>
-
-	
-
-   
-
-  
 
 
 
