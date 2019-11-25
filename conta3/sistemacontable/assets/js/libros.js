@@ -39,10 +39,18 @@ function listatexto(id){
 function imprimir(id="detalles",mes,contenido="M"){
     var titulo; //aca se guarda el titulo :v , arriba en la funcion pido 3 cosas, el id de la tabla original que pasara a imprimirse con todos sus datos
     var sub;     //esta var es para el subtititulo, mes traera el mes en letras para mostrarlo, contenido determina que se imprimira
+    
+    
     if(contenido=="M"){//M es para libro mayor
         titulo = "<h1> EMPRESA X LIBRO MAYOR  </h1> <br>";//´pone el titulo de libro mayor dentro de una etiqueta h1 y con un espacio despues br
     }else if(contenido=="D"){//D es para libro diario osea si yo pongo imprimir('detalles','20 de febrero','D'); estare imprimiendo un libro diario jalando la tabla con el id detalles con la fecha de 20 de frebrero
         titulo = "<h1> EMPRESA X LIBRO DIARIO  </h1> <br>";
+    }else if(contenido=="C"){
+        titulo = "<h1> EMPRESA X Balance de Comprobacion  </h1> <br>";
+    }else if(contenido=="E"){
+        titulo = "<h1> EMPRESA X Estado de Resultados  </h1> <br>";
+    }else if(contenido=="G"){
+        titulo = "<h1> EMPRESA X Balance General  </h1> <br>";
     }
     
     sub = "<h2>"+mes+"</h2>";//eñ sub titulo es el mes entre etiquetas h2 para que sea mas grande
@@ -51,8 +59,10 @@ function imprimir(id="detalles",mes,contenido="M"){
     ventana.document.write( "<link href='assets/css/bootstrap.min.css' rel='stylesheet'/>");//luego van estas de bootrap para estilos
     ventana.document.write("</head><body onload='window.print();window.close();'> <div style='width: 100%' ><center>");//y luego se pone el body con el evento onload para que al nomas cargar abra la ventana de imprimir y luego se cierre
     ventana.document.write(titulo+sub+"<br><br>");//luego agrega el titulo el subtitulo y 2 espacios
-    if(contenido=="M" || contenido=="D"){//luego si es libro mayor o libro diario se mandara a agregar una tabla que tambien jalara dentro de ella los datos de la tabla con el id "detalles" del documento original
+    if(contenido=="M" || contenido=="D" || contenido=="E"){//luego si es libro mayor o libro diario se mandara a agregar una tabla que tambien jalara dentro de ella los datos de la tabla con el id "detalles" del documento original
         ventana.document.write("<table style='width:80%;'  border='1px'>"+obtenerdentro("detalles")+"</table>");//y cerramos la tabla
+    }else if(contenido=="C" || contenido=="G"){
+        ventana.document.write("<div class='card strpied-tabled-with-hover' style='width:80%;'  >"+obtenerdentro("detalles")+"</div>");
     }
     ventana.document.write('</center></div></body></html>');//cerramos el documento html
     //basicamente  todo lo que esta del ventana.document.write(); sera codigo html que se agregara a la ventana
@@ -876,9 +886,19 @@ function comprobacion(bc="comprobacion"){
         ponerdentro("contenidoG",contenidos[5]);
         ponerval("totG",totales[5]);
 
-
         ponerval("totD",totD);
         ponerval("totH",totH);
+
+        $('input').each(function(indice, elementoH2){
+            var elemH2 = $(elementoH2);
+            if(elemH2.attr("type")=="text"){
+            console.log(elemH2);
+            elemH2.replaceWith('<p>$' + elemH2.val() + '</p>');
+            }
+          });
+
+        imprimir('detalles',listatexto('cons'),'C');
+
 }else if(bc=="resultados"){
     var calculo;console.log("venta: "+vnta);
     ponerval("totVenta",vnta);console.log("costo: "+ctvnta);
@@ -920,6 +940,17 @@ function comprobacion(bc="comprobacion"){
     ponerval("totImpuesto",calcaux);
     calculo-= parseFloat(calcaux);console.log("neta: "+calculo);
     ponerval("totUtilNeta",calculo);
+
+    $('input').each(function(indice, elementoH2){
+        var elemH2 = $(elementoH2);
+        if(elemH2.attr("type")=="text"){
+        console.log(elemH2);
+        elemH2.replaceWith('<p>$' + elemH2.val() + '</p>');
+        }
+      });
+
+
+    imprimir('detalles',listatexto('cons'),'E');
 
 }else if(bc=="general"){
     var calcaux;
@@ -963,6 +994,16 @@ function comprobacion(bc="comprobacion"){
     ponerval("totPasi",auxtot);
     auxtot = parseFloat(auxtot)+parseFloat(totG[4]);
     ponerval("totPatriP",auxtot);
+
+    $('input').each(function(indice, elementoH2){
+        var elemH2 = $(elementoH2);
+        if(elemH2.attr("type")=="text"){
+        console.log(elemH2);
+        elemH2.replaceWith('<p>$' + elemH2.val() + '</p>');
+        }
+      });
+
+    imprimir('detalles',listatexto('cons'),'G');
 
 }
 
