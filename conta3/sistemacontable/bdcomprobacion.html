@@ -132,82 +132,97 @@
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-8 col-md-offset-2">
-                        <div class="text-center">
-                            <label for="cons">Seleccione Mes A Comprobar</label>
-                        <select name="cons" id="cons">
-                        </select>
-                        <input onclick="comprobacion();" class="btn btn-primary" type="button" value="Comprobar">
-                        </div>
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title">Balance de comprobacion</h4>
+                            </div>
+                            <div class="content">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-md-8 col-md-offset-2">
+                                            <div class="text-center">
+                                                <div class="text-center">
+                                                    <label for="cons">Seleccione Mes A Comprobar</label>
+                                                <select name="cons" id="cons">
+                                                </select>
+                                                <input onclick="comprobacion();" class="btn btn-primary" type="button" value="Comprobar">
+                                                </div>
+                                                
+                                                <div class="card strpied-tabled-with-hover">
+                                                    <table class="table table-hover">
+                                                            <tr><th  colspan="5">Activo</th></tr>
+                                                             <tbody id="contenidoA">
+                                                                 
+                                                            </tbody>
+                                                            <tfoot>
+                                                                <th colspan="3">Total Activo: </th><td colspan="2"><input type="text" readonly class="form-control" name="tot1" id="totA"></td>
+                                                            </tfoot>  
+                                                    </table>
+                                                    <table class="table table-hover">
+                                                            <tr><th  colspan="5">Pasivo</th></tr>
+                                                             <tbody id="contenidoP">
+                                                                 
+                                                            </tbody>
+                                                            <tfoot>
+                                                                <th colspan="3">Total Pasivo: </th><td colspan="2"><input type="text" readonly class="form-control" name="tot1" id="totP"></td>
+                                                            </tfoot>  
+                                                    </table>
+                                                    <table class="table table-hover">
+                                                            <tr><th  colspan="5">Capital</th></tr>
+                                                             <tbody id="contenidoCp">
+                                                                 
+                                                            </tbody>
+                                                            <tfoot>
+                                                                <th colspan="3">Total Capital: </th><td colspan="2"><input type="text" readonly class="form-control" name="tot1" id="totCp"></td>
+                                                            </tfoot>  
+                                                    </table>
+                                                    <table class="table table-hover">
+                                                            <tr><th  colspan="5">Ingresos</th></tr>
+                                                             <tbody id="contenidoI">
+                                                                 
+                                                            </tbody>
+                                                            <tfoot>
+                                                                <th colspan="3">Total Ingresos: </th><td colspan="2"><input type="text" readonly class="form-control" name="tot1" id="totI"></td>
+                                                            </tfoot>  
+                                                    </table>
+                                                    <table class="table table-hover">
+                                                            <tr><th  colspan="5">Costos</th></tr>
+                                                             <tbody id="contenidoC">
+                                                                 
+                                                            </tbody>
+                                                            <tfoot>
+                                                                <th colspan="3">Total Costos: </th><td colspan="2"><input type="text" readonly class="form-control" name="tot1" id="totC"></td>
+                                                            </tfoot>  
+                                                    </table>
+                                                    <table class="table table-hover">
+                                                            <tr><th  colspan="5">Gastos</th></tr>
+                                                             <tbody id="contenidoG">
                         
-                        <div class="card strpied-tabled-with-hover">
-                            <table class="table table-hover">
-                                    <tr><th  colspan="5">Activo</th></tr>
-                                     <tbody id="contenidoA">
-                                         
-                                    </tbody>
-                                    <tfoot>
-                                        <th colspan="3">Total Activo: </th><td colspan="2"><input type="text" readonly class="form-control" name="tot1" id="totA"></td>
-                                    </tfoot>  
-                            </table>
-                            <table class="table table-hover">
-                                    <tr><th  colspan="5">Pasivo</th></tr>
-                                     <tbody id="contenidoP">
-                                         
-                                    </tbody>
-                                    <tfoot>
-                                        <th colspan="3">Total Pasivo: </th><td colspan="2"><input type="text" readonly class="form-control" name="tot1" id="totP"></td>
-                                    </tfoot>  
-                            </table>
-                            <table class="table table-hover">
-                                    <tr><th  colspan="5">Capital</th></tr>
-                                     <tbody id="contenidoCp">
-                                         
-                                    </tbody>
-                                    <tfoot>
-                                        <th colspan="3">Total Capital: </th><td colspan="2"><input type="text" readonly class="form-control" name="tot1" id="totCp"></td>
-                                    </tfoot>  
-                            </table>
-                            <table class="table table-hover">
-                                    <tr><th  colspan="5">Ingresos</th></tr>
-                                     <tbody id="contenidoI">
-                                         
-                                    </tbody>
-                                    <tfoot>
-                                        <th colspan="3">Total Ingresos: </th><td colspan="2"><input type="text" readonly class="form-control" name="tot1" id="totI"></td>
-                                    </tfoot>  
-                            </table>
-                            <table class="table table-hover">
-                                    <tr><th  colspan="5">Costos</th></tr>
-                                     <tbody id="contenidoC">
-                                         
-                                    </tbody>
-                                    <tfoot>
-                                        <th colspan="3">Total Costos: </th><td colspan="2"><input type="text" readonly class="form-control" name="tot1" id="totC"></td>
-                                    </tfoot>  
-                            </table>
-                            <table class="table table-hover">
-                                    <tr><th  colspan="5">Gastos</th></tr>
-                                     <tbody id="contenidoG">
-
-                                    </tbody>
-                                    <tfoot>
-                                        <th colspan="3">Total Gastos: </th><td colspan="2"><input type="text" readonly class="form-control" name="tot1" id="totG"></td>
-                                    </tfoot>  
-                            </table>
-                            <table class="table table-hover">
-                                <th colspan="2">Total: </th><td><input type="text" readonly class="form-control" name="tot1" id="totD"></td>
-                                                <td><input type="text" readonly class="form-control" name="tot2" id="totH"></td>
-                            </table>
+                                                            </tbody>
+                                                            <tfoot>
+                                                                <th colspan="3">Total Gastos: </th><td colspan="2"><input type="text" readonly class="form-control" name="tot1" id="totG"></td>
+                                                            </tfoot>  
+                                                    </table>
+                                                    <table class="table table-hover">
+                                                        <th colspan="2">Total: </th><td><input type="text" readonly class="form-control" name="tot1" id="totD"></td>
+                                                                        <td><input type="text" readonly class="form-control" name="tot2" id="totH"></td>
+                                                    </table>
+                                            </div>
+        
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    
+        
+
 
                 </div>
             </div>
         </div>
-    </div>
-</div>
+
 
 
 </body>
