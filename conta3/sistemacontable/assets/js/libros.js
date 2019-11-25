@@ -71,6 +71,9 @@ function imprimir(id="detalles",mes,contenido="M"){
         titulo = "<h1> EMPRESA X Estado de Resultados  </h1> <br>";
     }else if(contenido=="G"){
         titulo = "<h1> EMPRESA X Balance General  </h1> <br>";
+<<<<<<< HEAD
+>>>>>>> 64ca0761c85d2f993cf47e63c5424f375ac72bb9
+=======
 >>>>>>> 64ca0761c85d2f993cf47e63c5424f375ac72bb9
     }
     //onload='window.print();window.close();'
@@ -92,6 +95,9 @@ function imprimir(id="detalles",mes,contenido="M"){
         ventana.document.write("<table style='width:80%;'  border='1px'>"+obtenerdentro("detalles")+"</table>");//y cerramos la tabla
     }else if(contenido=="C" || contenido=="G"){//el balance general y el de comprobacion estan hechos de varias tablas por eso mejor hago que esten dentrod e un div
         ventana.document.write("<div class='card strpied-tabled-with-hover' style='width:80%;'  >"+obtenerdentro("detalles")+"</div>");
+<<<<<<< HEAD
+>>>>>>> 64ca0761c85d2f993cf47e63c5424f375ac72bb9
+=======
 >>>>>>> 64ca0761c85d2f993cf47e63c5424f375ac72bb9
     }
     ventana.document.write("</center></div></body></html>");//cerramos el documento html
