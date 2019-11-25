@@ -13,25 +13,29 @@
     href= 
 "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
 </head>
-<body >
+<body onload="sesion();" >
 <br>
 <div class="wrapper animated bounce">
   <h1>Cristy Salon</h1>
   
   <hr>
-  <form>
+  <form >
        
     <label id="icon" for="usuario"> <i class="fa fa-user icon"> </i> </label>
-    <input type="text" placeholder="Usuario" id="usuario">
+    <input type="text" placeholder="Correo" id="usuario">
     <label id="icon" for="contraseña"><i class="fa fa-key"></i></label>
-    <input type="password" placeholder="contraseña" id="contraseña">
+    <input type="password" placeholder="contraseña" id="contra">
     <br>
-    <input type="submit" value="Inicia sesión">
+    <input onclick="login();" type="button" value="Inicia sesión">
     <hr>
-    <div class="crtacc"><a href="#">Crea una cuenta</a></div>
+    <div class="crtacc"><a onclick="salir();" href="#">Crea una cuenta</a></div>
+
   </form>
 </div>
 
 
 </body>
+<script src="https://www.gstatic.com/firebasejs/7.4.0/firebase.js"></script>
+<script src="../conta3/sistemacontable/assets/js/libros.js"></script>
+
 </html>
