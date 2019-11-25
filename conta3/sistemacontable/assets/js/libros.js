@@ -61,44 +61,27 @@ function imprimir(id="detalles",mes,contenido="M"){
     if(contenido=="M"){//M es para libro mayor
         titulo = "<h2 class='font-weight-bolder font-italic'> EMPRESA CRISTY SALON LIBRO MAYOR  </h2> <br>";//´pone el titulo de libro mayor dentro de una etiqueta h1 y con un espacio despues br
     }else if(contenido=="D"){//D es para libro diario osea si yo pongo imprimir('detalles','20 de febrero','D'); estare imprimiendo un libro diario jalando la tabla con el id detalles con la fecha de 20 de frebrero
-<<<<<<< HEAD
         titulo = "<h2 class='font-weight-bolder font-italic'> EMPRESA CRISTY SALON LIBRO DIARIO  </h2> <br>";
-=======
-        titulo = "<h1> EMPRESA X LIBRO DIARIO  </h1> <br>";
     }else if(contenido=="C"){
         titulo = "<h1> EMPRESA X Balance de Comprobacion  </h1> <br>";
     }else if(contenido=="E"){
         titulo = "<h1> EMPRESA X Estado de Resultados  </h1> <br>";
     }else if(contenido=="G"){
         titulo = "<h1> EMPRESA X Balance General  </h1> <br>";
-<<<<<<< HEAD
->>>>>>> 64ca0761c85d2f993cf47e63c5424f375ac72bb9
-=======
->>>>>>> 64ca0761c85d2f993cf47e63c5424f375ac72bb9
     }
     //onload='window.print();window.close();'
     sub = "<h3 class='font-weight-bolder'>"+mes+"</h3>";//eñ sub titulo es el mes entre etiquetas h2 para que sea mas grande
     var ventana = window.open('','PRINT', 'height=400,width=600');//esto abre una nueva ventana con 400 de alto por 600 de ancho
     ventana.document.write('<html><head><img src="log.png" class="ribbon">');//esto hace que dentro de esa ventana se pongan estas etiquetas
     ventana.document.write( "<link href='assets/css/bootstrap.min.css' rel='stylesheet'/>");//luego van estas de bootrap para estilos
-<<<<<<< HEAD
     ventana.document.write("<link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous'>");
     ventana.document.write("<link href='assets/css/light-bootstrap-dashboard.css' rel='stylesheet'/>");
-    ventana.document.write("</head><body>");//y luego se pone el body con el evento onload para que al nomas cargar abra la ventana de imprimir y luego se cierre
-    ventana.document.write("<div style='width: 100%' ><center>"+titulo+sub+"<br><br>");//luego agrega el titulo el subtitulo y 2 espacios
-    if(contenido=="M" || contenido=="D"){//luego si es libro mayor o libro diario se mandara a agregar una tabla que tambien jalara dentro de ella los datos de la tabla con el id "detalles" del documento original
-        ventana.document.write("<table class='table table-striped' style='width:80%;'  border='25px'>"+obtenerdentro("detalles")+"</table>");//y cerramos la tabla
-=======
     ventana.document.write("</head><body onload='window.print();window.close();'> <div style='width: 100%' ><center>");//y luego se pone el body con el evento onload para que al nomas cargar abra la ventana de imprimir y luego se cierre
     ventana.document.write(titulo+sub+"<br><br>");//luego agrega el titulo el subtitulo y 2 espacios
     if(contenido=="M" || contenido=="D" || contenido=="E"){//luego si es libro mayor o libro diario se mandara a agregar una tabla que tambien jalara dentro de ella los datos de la tabla con el id "detalles" del documento original
-        ventana.document.write("<table style='width:80%;'  border='1px'>"+obtenerdentro("detalles")+"</table>");//y cerramos la tabla
+        ventana.document.write("<table class='table table-striped' style='width:80%;'  border='1px'>"+obtenerdentro("detalles")+"</table>");//y cerramos la tabla
     }else if(contenido=="C" || contenido=="G"){//el balance general y el de comprobacion estan hechos de varias tablas por eso mejor hago que esten dentrod e un div
         ventana.document.write("<div class='card strpied-tabled-with-hover' style='width:80%;'  >"+obtenerdentro("detalles")+"</div>");
-<<<<<<< HEAD
->>>>>>> 64ca0761c85d2f993cf47e63c5424f375ac72bb9
-=======
->>>>>>> 64ca0761c85d2f993cf47e63c5424f375ac72bb9
     }
     ventana.document.write("</center></div></body></html>");//cerramos el documento html
     //basicamente  todo lo que esta del ventana.document.write(); sera codigo html que se agregara a la ventana
