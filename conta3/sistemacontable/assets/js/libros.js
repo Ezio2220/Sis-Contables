@@ -35,6 +35,23 @@ function listatexto(id){
     var ax = document.getElementById(id).options.selectedIndex;
     return document.getElementById(id).options.item(ax).text;
 }
+/*function algo(){
+    var bd = firebase.database().ref("Cuentas/");
+    var tmp;
+    bd.once("value",function(snap){
+        var aux = snap.val();
+        console.log(aux);
+        for(var doc in aux){
+
+            if(doc=="Cuenta de resultados acreedoras"){
+                console.log(doc);
+                tmp=aux[doc];
+            }
+        }
+        console.log(tmp);
+        bd.child("Ingresos").set(tmp);
+    });
+}*/
 //################################################################################IMPRIMIR DATOS!!!!!!!!!!!!!!!!!!###############################################
 function imprimir(id="detalles",mes,contenido="M"){
     var titulo; //aca se guarda el titulo :v , arriba en la funcion pido 3 cosas, el id de la tabla original que pasara a imprimirse con todos sus datos
