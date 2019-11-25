@@ -81,7 +81,7 @@ function imprimir(id="detalles",mes,contenido="M"){
     if(contenido=="M" || contenido=="D" || contenido=="E"){//luego si es libro mayor o libro diario se mandara a agregar una tabla que tambien jalara dentro de ella los datos de la tabla con el id "detalles" del documento original
         ventana.document.write("<table class='table table-striped' style='width:80%;'  border='25px'>"+obtenerdentro("detalles")+"</table>");//y cerramos la tabla
     }else if(contenido=="C" || contenido=="G"){//el balance general y el de comprobacion estan hechos de varias tablas por eso mejor hago que esten dentrod e un div
-        ventana.document.write("<div class='card strpied-tabled-with-hover' style='width:80%;'  >"+obtenerdentro("detalles")+"</div>");
+        ventana.document.write("<div class='card strpied-tabled-with-hover' style='width:100%;'  ><div style='padding-left:15%;' class='row'>"+obtenerdentro("detalles")+"</div></div>");
     }
     ventana.document.write("</center></div></body></html>");//cerramos el documento html
     //basicamente  todo lo que esta del ventana.document.write(); sera codigo html que se agregara a la ventana
