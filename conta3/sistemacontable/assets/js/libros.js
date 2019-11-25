@@ -35,26 +35,66 @@ function listatexto(id){
     var ax = document.getElementById(id).options.selectedIndex;
     return document.getElementById(id).options.item(ax).text;
 }
+/*function algo(){
+    var bd = firebase.database().ref("Cuentas/");
+    var tmp;
+    bd.once("value",function(snap){
+        var aux = snap.val();
+        console.log(aux);
+        for(var doc in aux){
+
+            if(doc=="Cuenta de resultados acreedoras"){
+                console.log(doc);
+                tmp=aux[doc];
+            }
+        }
+        console.log(tmp);
+        bd.child("Ingresos").set(tmp);
+    });
+}*/
 //################################################################################IMPRIMIR DATOS!!!!!!!!!!!!!!!!!!###############################################
 function imprimir(id="detalles",mes,contenido="M"){
     var titulo; //aca se guarda el titulo :v , arriba en la funcion pido 3 cosas, el id de la tabla original que pasara a imprimirse con todos sus datos
     var sub;     //esta var es para el subtititulo, mes traera el mes en letras para mostrarlo, contenido determina que se imprimira
-    if(contenido=="M"){//M es para libro mayor
-        titulo = "<h1> EMPRESA X LIBRO MAYOR  </h1> <br>";//´pone el titulo de libro mayor dentro de una etiqueta h1 y con un espacio despues br
-    }else if(contenido=="D"){//D es para libro diario osea si yo pongo imprimir('detalles','20 de febrero','D'); estare imprimiendo un libro diario jalando la tabla con el id detalles con la fecha de 20 de frebrero
-        titulo = "<h1> EMPRESA X LIBRO DIARIO  </h1> <br>";
-    }
     
-    sub = "<h2>"+mes+"</h2>";//eñ sub titulo es el mes entre etiquetas h2 para que sea mas grande
+    
+    if(contenido=="M"){//M es para libro mayor
+        titulo = "<h2 class='font-weight-bolder font-italic'> EMPRESA CRISTY SALON LIBRO MAYOR  </h2> <br>";//´pone el titulo de libro mayor dentro de una etiqueta h1 y con un espacio despues br
+    }else if(contenido=="D"){//D es para libro diario osea si yo pongo imprimir('detalles','20 de febrero','D'); estare imprimiendo un libro diario jalando la tabla con el id detalles con la fecha de 20 de frebrero
+<<<<<<< HEAD
+        titulo = "<h2 class='font-weight-bolder font-italic'> EMPRESA CRISTY SALON LIBRO DIARIO  </h2> <br>";
+=======
+        titulo = "<h1> EMPRESA X LIBRO DIARIO  </h1> <br>";
+    }else if(contenido=="C"){
+        titulo = "<h1> EMPRESA X Balance de Comprobacion  </h1> <br>";
+    }else if(contenido=="E"){
+        titulo = "<h1> EMPRESA X Estado de Resultados  </h1> <br>";
+    }else if(contenido=="G"){
+        titulo = "<h1> EMPRESA X Balance General  </h1> <br>";
+>>>>>>> 64ca0761c85d2f993cf47e63c5424f375ac72bb9
+    }
+    //onload='window.print();window.close();'
+    sub = "<h3 class='font-weight-bolder'>"+mes+"</h3>";//eñ sub titulo es el mes entre etiquetas h2 para que sea mas grande
     var ventana = window.open('','PRINT', 'height=400,width=600');//esto abre una nueva ventana con 400 de alto por 600 de ancho
-    ventana.document.write('<html><head>');//esto hace que dentro de esa ventana se pongan estas etiquetas
+    ventana.document.write('<html><head><img src="log.png" class="ribbon">');//esto hace que dentro de esa ventana se pongan estas etiquetas
     ventana.document.write( "<link href='assets/css/bootstrap.min.css' rel='stylesheet'/>");//luego van estas de bootrap para estilos
+<<<<<<< HEAD
+    ventana.document.write("<link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous'>");
+    ventana.document.write("<link href='assets/css/light-bootstrap-dashboard.css' rel='stylesheet'/>");
+    ventana.document.write("</head><body>");//y luego se pone el body con el evento onload para que al nomas cargar abra la ventana de imprimir y luego se cierre
+    ventana.document.write("<div style='width: 100%' ><center>"+titulo+sub+"<br><br>");//luego agrega el titulo el subtitulo y 2 espacios
+    if(contenido=="M" || contenido=="D"){//luego si es libro mayor o libro diario se mandara a agregar una tabla que tambien jalara dentro de ella los datos de la tabla con el id "detalles" del documento original
+        ventana.document.write("<table class='table table-striped' style='width:80%;'  border='25px'>"+obtenerdentro("detalles")+"</table>");//y cerramos la tabla
+=======
     ventana.document.write("</head><body onload='window.print();window.close();'> <div style='width: 100%' ><center>");//y luego se pone el body con el evento onload para que al nomas cargar abra la ventana de imprimir y luego se cierre
     ventana.document.write(titulo+sub+"<br><br>");//luego agrega el titulo el subtitulo y 2 espacios
-    if(contenido=="M" || contenido=="D"){//luego si es libro mayor o libro diario se mandara a agregar una tabla que tambien jalara dentro de ella los datos de la tabla con el id "detalles" del documento original
+    if(contenido=="M" || contenido=="D" || contenido=="E"){//luego si es libro mayor o libro diario se mandara a agregar una tabla que tambien jalara dentro de ella los datos de la tabla con el id "detalles" del documento original
         ventana.document.write("<table style='width:80%;'  border='1px'>"+obtenerdentro("detalles")+"</table>");//y cerramos la tabla
+    }else if(contenido=="C" || contenido=="G"){//el balance general y el de comprobacion estan hechos de varias tablas por eso mejor hago que esten dentrod e un div
+        ventana.document.write("<div class='card strpied-tabled-with-hover' style='width:80%;'  >"+obtenerdentro("detalles")+"</div>");
+>>>>>>> 64ca0761c85d2f993cf47e63c5424f375ac72bb9
     }
-    ventana.document.write('</center></div></body></html>');//cerramos el documento html
+    ventana.document.write("</center></div></body></html>");//cerramos el documento html
     //basicamente  todo lo que esta del ventana.document.write(); sera codigo html que se agregara a la ventana
     ventana.document.close(); // necesario para IE >= 10
     ventana.focus(); // necesario para IE >= 10
@@ -876,9 +916,19 @@ function comprobacion(bc="comprobacion"){
         ponerdentro("contenidoG",contenidos[5]);
         ponerval("totG",totales[5]);
 
-
         ponerval("totD",totD);
         ponerval("totH",totH);
+
+        $('input').each(function(indice, elementoH2){
+            var elemH2 = $(elementoH2);
+            if(elemH2.attr("type")=="text"){
+            console.log(elemH2);
+            elemH2.replaceWith('<p>$' + elemH2.val() + '</p>');
+            }
+          });
+
+        imprimir('detalles',listatexto('cons'),'C');
+
 }else if(bc=="resultados"){
     var calculo;console.log("venta: "+vnta);
     ponerval("totVenta",vnta);console.log("costo: "+ctvnta);
@@ -920,6 +970,17 @@ function comprobacion(bc="comprobacion"){
     ponerval("totImpuesto",calcaux);
     calculo-= parseFloat(calcaux);console.log("neta: "+calculo);
     ponerval("totUtilNeta",calculo);
+
+    $('input').each(function(indice, elementoH2){
+        var elemH2 = $(elementoH2);
+        if(elemH2.attr("type")=="text"){
+        console.log(elemH2);
+        elemH2.replaceWith('<p>$' + elemH2.val() + '</p>');
+        }
+      });
+
+
+    imprimir('detalles',listatexto('cons'),'E');
 
 }else if(bc=="general"){
     var calcaux;
@@ -964,6 +1025,16 @@ function comprobacion(bc="comprobacion"){
     auxtot = parseFloat(auxtot)+parseFloat(totG[4]);
     ponerval("totPatriP",auxtot);
 
+    $('input').each(function(indice, elementoH2){
+        var elemH2 = $(elementoH2);
+        if(elemH2.attr("type")=="text"){
+        console.log(elemH2);
+        elemH2.replaceWith('<p>$' + elemH2.val() + '</p>');
+        }
+      });
+
+    imprimir('detalles',listatexto('cons'),'G');
+
 }
 
 //falta irlos agregando a los contenido y las sumas
@@ -985,6 +1056,86 @@ function cargarM(id="cons"){
                 op.value = aux[data].detalles;
                // op.value= data;
                 lista.add(op);
+            }
+
+        }
+    });
+}
+
+//################################################################################################################################
+function login(){
+    var user=obtenerval("usuario");
+    var pass=obtenerval("contra");
+    const verify = firebase.auth();
+    
+    verify.signInWithEmailAndPassword(user, pass).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        alert("ERROR "+errorMessage);
+       // location.reload();
+        console.log(error);
+        //return;
+        // ...
+    });
+  /*  var comp = verify.currentUser;
+    if(comp){
+        alert(comp.email+" accediendo..");
+        window.location.href = '../conta3/sistemacontable/index.html';
+    }else{
+        alert("datos incorrectos");
+    }*/
+    sesion();
+   /* verify.onAuthStateChanged(firebaseUser=>{
+        alert(firebaseUser);
+        if(firebaseUser){
+            alert("accediendo..");
+            window.location.href = '../conta3/sistemacontable/index.html';
+        }else{
+            alert("datos incorrectos");
+        }
+    });*/
+
+   // alert("lol");
+   // window.location.href = '../conta3/sistemacontable/index.html';
+
+}
+function salir(){
+    const verify = firebase.auth();
+    verify.signOut();
+    alert("Cerrando sesion..");
+    if(window.location.href.search("login")!=-1){
+        location.reload();
+    }else{
+         sesion(1);
+    }
+   
+    
+}
+function sesion(rp=0){
+    //var base="file:///D:/works/0/2019/Contables/Sis-Contables/conta3/sistemacontable/";
+    const verify = firebase.auth();
+    verify.onAuthStateChanged(firebaseUser=>{
+        if(firebaseUser){
+            if(window.location.href.search("login")!=-1){
+                alert("correcto");
+                window.location.href = '../conta3/sistemacontable/index.html';
+            }
+            console.log("CORRECTO!!!!!!!!!!");
+        }else{
+            if(window.location.href.search("login")!=-1){
+              /*  alert("datos incorrectos");
+                location.reload();*/
+            }else{
+                if(rp==0){
+                    console.log("NO ESTA LOGEADO");
+                  //  alert(window.location.href);
+                    alert("DEBE INICIAR SESION!");
+                    window.location.href = "../../conta/login.html";
+                }else{
+                    window.location.href = "../../conta/login.html";
+                }
+
             }
 
         }
