@@ -1130,3 +1130,26 @@ function sesion(rp=0){
         }
     });
 }
+function iva(){
+    var str = "";
+    var op = obtenerelm("inc");
+    console.log(op);
+    var val = obtenerval("monto");
+    console.log(val);
+    if(op.checked){
+        var x = parseFloat(val)/1.13;
+        x=parseFloat(Math.round(x * 100) / 100).toFixed(2);
+        str+= "<div class='col-md-4' ><label for='1' >Monto Sin IVA</label> <input type='number' id='1' name='1' class='form-control' value='"+x+"'><button onclick=\" obtenerelm('1').select();document.execCommand('copy');\" class='btn btn-primary btn-xs'>Copiar</button></div>";
+        var x = parseFloat(val)-parseFloat(x);
+        x=parseFloat(Math.round(x * 100) / 100).toFixed(2);
+        str+= "<div class='col-md-4' ><label for='2' >Valor del IVA</label> <input type='number' id='2' name='2' class='form-control' value='"+x+"'><button onclick=\" obtenerelm('2').select();document.execCommand('copy');\"  class='btn btn-primary btn-xs'>Copiar</button></div>";
+    }else{
+        var x = parseFloat(val)*1.13;
+        x=parseFloat(Math.round(x * 100) / 100).toFixed(2);
+        str+= "<div class='col-md-4' ><label for='1' >Monto con IVA</label> <input type='number' id='1' name='1' class='form-control' value='"+x+"'><button onclick=\" obtenerelm('1').select();document.execCommand('copy');\" class='btn btn-primary btn-xs'>Copiar</button></div>";
+        var x = parseFloat(val)*0.13;
+        x=parseFloat(Math.round(x * 100) / 100).toFixed(2);
+        str+= "<div class='col-md-4' ><label for='2' >Valor del IVA</label> <input type='number' id='2' name='2' class='form-control' value='"+x+"'><button onclick=\" obtenerelm('2').select();document.execCommand('copy');\" class='btn btn-primary btn-xs'>Copiar</button></div>";
+    }
+    ponerdentro("iva",str);
+}
